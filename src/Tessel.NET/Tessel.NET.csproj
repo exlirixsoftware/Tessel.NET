@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Tessel.NET</RootNamespace>
+    <AssemblyName>Tessel.NET</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <PackageId>Tessel.NET</PackageId>
+    <Description>A modern, themeable WPF UI framework: light/dark themes, accent colors, restyled standard controls and a set of custom controls.</Description>
+  </PropertyGroup>
+
+</Project>

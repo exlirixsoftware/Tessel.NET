@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Tessel.UI\Tessel.UI.csproj" />
+    <ProjectReference Include="..\..\src\Tessel.NET\Tessel.NET.csproj" />
   </ItemGroup>
 
 </Project>

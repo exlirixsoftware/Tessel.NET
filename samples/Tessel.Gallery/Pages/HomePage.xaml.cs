@@ -1,6 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
-using Tessel.UI.Controls;
+using Tessel.NET.Controls;
 
 namespace Tessel.Gallery.Pages;
 

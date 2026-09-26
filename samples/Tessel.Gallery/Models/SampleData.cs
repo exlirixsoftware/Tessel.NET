@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Tessel.UI.Mvvm;
+using Tessel.NET.Mvvm;
 
 namespace Tessel.Gallery.Models;
 

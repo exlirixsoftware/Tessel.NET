@@ -3,6 +3,6 @@
     <Project Path="samples/Tessel.Gallery/Tessel.Gallery.csproj" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/Tessel.UI/Tessel.UI.csproj" />
+    <Project Path="src/Tessel.NET/Tessel.NET.csproj" />
   </Folder>
 </Solution>

@@ -3,8 +3,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Tessel.UI.Controls;
-using Tessel.UI.Theming;
+using Tessel.NET.Controls;
+using Tessel.NET.Theming;
 
 namespace Tessel.Gallery.Pages;
 

@@ -1,9 +1,9 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using Tessel.UI.Controls;
-using Tessel.UI.Helpers;
-using Tessel.UI.Markup;
+using Tessel.NET.Controls;
+using Tessel.NET.Helpers;
+using Tessel.NET.Markup;
 
 namespace Tessel.Gallery.Pages;
 

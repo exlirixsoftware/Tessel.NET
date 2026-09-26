@@ -3,9 +3,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Tessel.UI.Controls;
-using Tessel.UI.Markup;
-using Tessel.UI.Theming;
+using Tessel.NET.Controls;
+using Tessel.NET.Markup;
+using Tessel.NET.Theming;
 
 namespace Tessel.Gallery;
 

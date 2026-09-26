@@ -1,7 +1,5 @@
 # Tessel.NET
 
-<img src="src/Tessel.UI/Resources/logo.png" width="100">
-
 A modern, themeable UI framework for **WPF on .NET 10**.
 
 - Light, dark and system themes, switchable at runtime
@@ -13,7 +11,7 @@ A modern, themeable UI framework for **WPF on .NET 10**.
 
 ```
 Tessel.NET.slnx
-├── src/Tessel.UI            the library
+├── src/Tessel.NET            the library
 └── samples/Tessel.Gallery   a demo app showing every control
 ```
 
@@ -25,7 +23,7 @@ dotnet run --project samples/Tessel.Gallery
 
 ## Getting started
 
-Reference `Tessel.UI`, then merge the theme into `App.xaml`:
+Reference `Tessel.NET`, then merge the theme into `App.xaml`:
 
 ```xml
 <Application xmlns:tessel="http://schemas.tessel.net/ui" ...>

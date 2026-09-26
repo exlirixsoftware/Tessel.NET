@@ -80,7 +80,7 @@
             <!--  Getting started  -->
             <tessel:Card Margin="0,16,0,0" Header="Getting started">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="1. Reference Tessel.UI and merge the theme into App.xaml:" />
+                    <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="1. Reference Tessel.NET and merge the theme into App.xaml:" />
                     <Border Margin="0,8,0,16"
                             Padding="16,12"
                             Background="{DynamicResource Tessel.SubtleBrush}"
