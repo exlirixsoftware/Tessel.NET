@@ -1,0 +1,112 @@
+<UserControl x:Class="Tessel.Gallery.Pages.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <UserControl.Resources>
+        <Style x:Key="AccentSwatch" TargetType="RadioButton">
+            <Setter Property="Width" Value="36" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Margin" Value="0,0,8,8" />
+            <Setter Property="GroupName" Value="Accent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource Tessel.FocusVisual}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <Ellipse x:Name="Ring"
+                                     Stroke="{DynamicResource Tessel.TextBrush}"
+                                     StrokeThickness="2"
+                                     Visibility="Hidden" />
+                            <Ellipse Margin="4" Fill="{TemplateBinding Background}" />
+                            <TextBlock x:Name="Check"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                                       FontSize="12"
+                                       Foreground="White"
+                                       Text="&#xE73E;"
+                                       Visibility="Hidden" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Ring" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="Ring" Property="Opacity" Value="0.4" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Ring" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="Ring" Property="Opacity" Value="1" />
+                                <Setter TargetName="Check" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Settings" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Theme and accent color are applied app-wide at runtime through ThemeManager." />
+
+            <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.BodyStrong}" Text="Appearance" />
+            <tessel:SettingsCard Margin="0,0,0,4"
+                                 Description="Choose light, dark, or follow your Windows setting"
+                                 Header="App theme"
+                                 Icon="{tessel:Glyph Brightness}">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="LightRadio" Margin="0,0,16,0" Checked="OnThemeChecked" Content="Light" GroupName="Theme" Tag="Light" />
+                    <RadioButton x:Name="DarkRadio" Margin="0,0,16,0" Checked="OnThemeChecked" Content="Dark" GroupName="Theme" Tag="Dark" />
+                    <RadioButton x:Name="SystemRadio" Checked="OnThemeChecked" Content="System" GroupName="Theme" Tag="System" />
+                </StackPanel>
+            </tessel:SettingsCard>
+
+            <tessel:SettingsCard Margin="0,0,0,4"
+                                 Description="Used for primary buttons, selection and focus"
+                                 Header="Accent color"
+                                 Icon="{tessel:Glyph Color}">
+                <Button Click="OnUseSystemAccent" Content="Use Windows accent" />
+            </tessel:SettingsCard>
+            <Border Margin="0,0,0,24"
+                    Padding="68,16,16,8"
+                    Background="{DynamicResource Tessel.SurfaceBrush}"
+                    BorderBrush="{DynamicResource Tessel.BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource Tessel.OverlayCornerRadius}">
+                <WrapPanel x:Name="AccentPanel">
+                    <RadioButton Background="#4F46E5" Checked="OnAccentChecked" IsChecked="True" Style="{StaticResource AccentSwatch}" Tag="" ToolTip="Default (Indigo)" />
+                    <RadioButton Background="#0078D4" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#0078D4" ToolTip="Blue" />
+                    <RadioButton Background="#0891B2" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#0891B2" ToolTip="Cyan" />
+                    <RadioButton Background="#059669" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#059669" ToolTip="Emerald" />
+                    <RadioButton Background="#65A30D" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#65A30D" ToolTip="Lime" />
+                    <RadioButton Background="#D97706" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#D97706" ToolTip="Amber" />
+                    <RadioButton Background="#EA580C" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#EA580C" ToolTip="Orange" />
+                    <RadioButton Background="#DC2626" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#DC2626" ToolTip="Red" />
+                    <RadioButton Background="#DB2777" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#DB2777" ToolTip="Pink" />
+                    <RadioButton Background="#9333EA" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#9333EA" ToolTip="Purple" />
+                    <RadioButton Background="#475569" Checked="OnAccentChecked" Style="{StaticResource AccentSwatch}" Tag="#475569" ToolTip="Slate" />
+                </WrapPanel>
+            </Border>
+
+            <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.BodyStrong}" Text="Preview" />
+            <tessel:Card Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel Margin="0,0,0,12">
+                        <Button Margin="0,0,8,0" Content="Primary" Style="{StaticResource Tessel.Button.Accent}" />
+                        <Button Margin="0,0,8,0" Content="Outline" Style="{StaticResource Tessel.Button.Outline}" />
+                        <CheckBox Margin="8,0,16,0" Content="Checked" IsChecked="True" />
+                        <tessel:ToggleSwitch Content="On" IsChecked="True" />
+                    </WrapPanel>
+                    <ProgressBar Margin="0,0,0,12" Value="65" />
+                    <Slider Value="4" />
+                </StackPanel>
+            </tessel:Card>
+
+            <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.BodyStrong}" Text="About" />
+            <tessel:SettingsCard Description="A modern UI framework for WPF on .NET 10" Header="Tessel UI 1.0" Icon="{tessel:Glyph Info}">
+                <tessel:Badge Content="MIT" Kind="Info" />
+            </tessel:SettingsCard>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

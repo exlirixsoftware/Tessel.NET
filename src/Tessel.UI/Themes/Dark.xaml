@@ -1,0 +1,78 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  Neutrals  -->
+    <Color x:Key="Tessel.BackgroundColor">#0F1115</Color>
+    <Color x:Key="Tessel.SurfaceColor">#181B21</Color>
+    <Color x:Key="Tessel.SurfaceAltColor">#1D2027</Color>
+    <Color x:Key="Tessel.SubtleColor">#242832</Color>
+    <Color x:Key="Tessel.BorderColor">#2C313B</Color>
+    <Color x:Key="Tessel.BorderStrongColor">#434B58</Color>
+
+    <Color x:Key="Tessel.TextColor">#E8EAED</Color>
+    <Color x:Key="Tessel.TextSecondaryColor">#A3ACB9</Color>
+    <Color x:Key="Tessel.TextTertiaryColor">#7A8494</Color>
+    <Color x:Key="Tessel.TextDisabledColor">#565E6B</Color>
+
+    <Color x:Key="Tessel.ControlBackgroundColor">#20242C</Color>
+    <Color x:Key="Tessel.ControlHoverColor">#292E38</Color>
+    <Color x:Key="Tessel.ControlPressedColor">#313743</Color>
+    <Color x:Key="Tessel.InputBackgroundColor">#14171C</Color>
+    <Color x:Key="Tessel.OverlayColor">#99000000</Color>
+
+    <!--  Accent  -->
+    <Color x:Key="Tessel.AccentColor">#6366F1</Color>
+    <Color x:Key="Tessel.AccentHoverColor">#7C7FF4</Color>
+    <Color x:Key="Tessel.AccentPressedColor">#5457D6</Color>
+    <Color x:Key="Tessel.AccentSubtleColor">#272A52</Color>
+    <Color x:Key="Tessel.OnAccentColor">#FFFFFF</Color>
+
+    <!--  Semantic  -->
+    <Color x:Key="Tessel.SuccessColor">#4ADE80</Color>
+    <Color x:Key="Tessel.SuccessSubtleColor">#15291E</Color>
+    <Color x:Key="Tessel.WarningColor">#FBBF24</Color>
+    <Color x:Key="Tessel.WarningSubtleColor">#33280F</Color>
+    <Color x:Key="Tessel.DangerColor">#EF4444</Color>
+    <Color x:Key="Tessel.DangerHoverColor">#F26363</Color>
+    <Color x:Key="Tessel.DangerSubtleColor">#361A1C</Color>
+    <Color x:Key="Tessel.InfoColor">#38BDF8</Color>
+    <Color x:Key="Tessel.InfoSubtleColor">#122838</Color>
+
+    <Color x:Key="Tessel.ShadowColor">#000000</Color>
+
+    <!--  Brushes  -->
+    <SolidColorBrush x:Key="Tessel.BackgroundBrush" Color="{StaticResource Tessel.BackgroundColor}" />
+    <SolidColorBrush x:Key="Tessel.SurfaceBrush" Color="{StaticResource Tessel.SurfaceColor}" />
+    <SolidColorBrush x:Key="Tessel.SurfaceAltBrush" Color="{StaticResource Tessel.SurfaceAltColor}" />
+    <SolidColorBrush x:Key="Tessel.SubtleBrush" Color="{StaticResource Tessel.SubtleColor}" />
+    <SolidColorBrush x:Key="Tessel.BorderBrush" Color="{StaticResource Tessel.BorderColor}" />
+    <SolidColorBrush x:Key="Tessel.BorderStrongBrush" Color="{StaticResource Tessel.BorderStrongColor}" />
+    <SolidColorBrush x:Key="Tessel.TextBrush" Color="{StaticResource Tessel.TextColor}" />
+    <SolidColorBrush x:Key="Tessel.TextSecondaryBrush" Color="{StaticResource Tessel.TextSecondaryColor}" />
+    <SolidColorBrush x:Key="Tessel.TextTertiaryBrush" Color="{StaticResource Tessel.TextTertiaryColor}" />
+    <SolidColorBrush x:Key="Tessel.TextDisabledBrush" Color="{StaticResource Tessel.TextDisabledColor}" />
+    <SolidColorBrush x:Key="Tessel.ControlBackgroundBrush" Color="{StaticResource Tessel.ControlBackgroundColor}" />
+    <SolidColorBrush x:Key="Tessel.ControlHoverBrush" Color="{StaticResource Tessel.ControlHoverColor}" />
+    <SolidColorBrush x:Key="Tessel.ControlPressedBrush" Color="{StaticResource Tessel.ControlPressedColor}" />
+    <SolidColorBrush x:Key="Tessel.InputBackgroundBrush" Color="{StaticResource Tessel.InputBackgroundColor}" />
+    <SolidColorBrush x:Key="Tessel.OverlayBrush" Color="{StaticResource Tessel.OverlayColor}" />
+    <SolidColorBrush x:Key="Tessel.AccentBrush" Color="{StaticResource Tessel.AccentColor}" />
+    <SolidColorBrush x:Key="Tessel.AccentHoverBrush" Color="{StaticResource Tessel.AccentHoverColor}" />
+    <SolidColorBrush x:Key="Tessel.AccentPressedBrush" Color="{StaticResource Tessel.AccentPressedColor}" />
+    <SolidColorBrush x:Key="Tessel.AccentSubtleBrush" Color="{StaticResource Tessel.AccentSubtleColor}" />
+    <SolidColorBrush x:Key="Tessel.OnAccentBrush" Color="{StaticResource Tessel.OnAccentColor}" />
+    <SolidColorBrush x:Key="Tessel.SuccessBrush" Color="{StaticResource Tessel.SuccessColor}" />
+    <SolidColorBrush x:Key="Tessel.SuccessSubtleBrush" Color="{StaticResource Tessel.SuccessSubtleColor}" />
+    <SolidColorBrush x:Key="Tessel.WarningBrush" Color="{StaticResource Tessel.WarningColor}" />
+    <SolidColorBrush x:Key="Tessel.WarningSubtleBrush" Color="{StaticResource Tessel.WarningSubtleColor}" />
+    <SolidColorBrush x:Key="Tessel.DangerBrush" Color="{StaticResource Tessel.DangerColor}" />
+    <SolidColorBrush x:Key="Tessel.DangerHoverBrush" Color="{StaticResource Tessel.DangerHoverColor}" />
+    <SolidColorBrush x:Key="Tessel.DangerSubtleBrush" Color="{StaticResource Tessel.DangerSubtleColor}" />
+    <SolidColorBrush x:Key="Tessel.InfoBrush" Color="{StaticResource Tessel.InfoColor}" />
+    <SolidColorBrush x:Key="Tessel.InfoSubtleBrush" Color="{StaticResource Tessel.InfoSubtleColor}" />
+
+    <!--  Elevation  -->
+    <DropShadowEffect x:Key="Tessel.Shadow" BlurRadius="16" Direction="270" Opacity="0.35" ShadowDepth="2" Color="{StaticResource Tessel.ShadowColor}" />
+    <DropShadowEffect x:Key="Tessel.ShadowLarge" BlurRadius="32" Direction="270" Opacity="0.5" ShadowDepth="8" Color="{StaticResource Tessel.ShadowColor}" />
+
+</ResourceDictionary>

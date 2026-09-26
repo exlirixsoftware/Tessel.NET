@@ -1,0 +1,408 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:h="clr-namespace:Tessel.UI.Helpers">
+
+    <!--  Calendar parts  -->
+    <Style x:Key="Tessel.CalendarNavButton" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextSecondaryBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.IconFontFamily}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bd" Background="Transparent" CornerRadius="{DynamicResource Tessel.SmallCornerRadius}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Tessel.ControlPressedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.35" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Tessel.CalendarHeaderButton" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bd"
+                            Padding="10,0"
+                            Background="Transparent"
+                            CornerRadius="{DynamicResource Tessel.SmallCornerRadius}">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Tessel.CalendarDayButton" TargetType="{x:Type CalendarDayButton}">
+        <Setter Property="Width" Value="36" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CalendarDayButton}">
+                    <Grid Background="Transparent">
+                        <Border x:Name="Bg"
+                                Margin="2"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="1.5"
+                                CornerRadius="16" />
+                        <ContentPresenter x:Name="ContentHost"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsInactive" Value="True">
+                            <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource Tessel.TextTertiaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource Tessel.AccentSubtleBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsToday" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource Tessel.OnAccentBrush}" />
+                            <Setter TargetName="ContentHost" Property="TextElement.FontWeight" Value="SemiBold" />
+                        </Trigger>
+                        <Trigger Property="IsBlackedOut" Value="True">
+                            <Setter TargetName="ContentHost" Property="Opacity" Value="0.3" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ContentHost" Property="Opacity" Value="0.35" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Tessel.CalendarButton" TargetType="{x:Type CalendarButton}">
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Height" Value="52" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CalendarButton}">
+                    <Grid Background="Transparent">
+                        <Border x:Name="Bg"
+                                Margin="3"
+                                Background="Transparent"
+                                CornerRadius="{DynamicResource Tessel.ControlCornerRadius}" />
+                        <ContentPresenter x:Name="ContentHost" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsInactive" Value="True">
+                            <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource Tessel.TextTertiaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="HasSelectedDays" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource Tessel.OnAccentBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Tessel.CalendarItem" TargetType="{x:Type CalendarItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CalendarItem}">
+                    <ControlTemplate.Resources>
+                        <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
+                            <TextBlock Margin="0,4"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource Tessel.TextSecondaryBrush}"
+                                       Text="{Binding}" />
+                        </DataTemplate>
+                    </ControlTemplate.Resources>
+                    <Grid x:Name="PART_Root">
+                        <Border Padding="8"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource Tessel.OverlayCornerRadius}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="PART_HeaderButton"
+                                        Focusable="False"
+                                        Style="{StaticResource Tessel.CalendarHeaderButton}" />
+                                <Button x:Name="PART_PreviousButton"
+                                        Grid.Column="1"
+                                        Content="&#xE70E;"
+                                        Focusable="False"
+                                        Style="{StaticResource Tessel.CalendarNavButton}" />
+                                <Button x:Name="PART_NextButton"
+                                        Grid.Column="2"
+                                        Content="&#xE70D;"
+                                        Focusable="False"
+                                        Style="{StaticResource Tessel.CalendarNavButton}" />
+                                <Grid x:Name="PART_MonthView"
+                                      Grid.Row="1"
+                                      Grid.ColumnSpan="3"
+                                      Margin="0,6,0,0"
+                                      HorizontalAlignment="Center"
+                                      Visibility="Visible">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                                <Grid x:Name="PART_YearView"
+                                      Grid.Row="1"
+                                      Grid.ColumnSpan="3"
+                                      Margin="0,6,0,0"
+                                      HorizontalAlignment="Center"
+                                      Visibility="Hidden">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Rectangle x:Name="PART_DisabledVisual"
+                                   Fill="{DynamicResource Tessel.SurfaceBrush}"
+                                   Opacity="0"
+                                   RadiusX="8"
+                                   RadiusY="8"
+                                   Stretch="Fill"
+                                   Visibility="Collapsed" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}" Value="Year">
+                            <Setter TargetName="PART_MonthView" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="PART_YearView" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}" Value="Decade">
+                            <Setter TargetName="PART_MonthView" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="PART_YearView" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_DisabledVisual" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_DisabledVisual" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Calendar  -->
+    <Style TargetType="{x:Type Calendar}">
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Tessel.SurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Tessel.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource Tessel.FontSize}" />
+        <Setter Property="CalendarItemStyle" Value="{StaticResource Tessel.CalendarItem}" />
+        <Setter Property="CalendarDayButtonStyle" Value="{StaticResource Tessel.CalendarDayButton}" />
+        <Setter Property="CalendarButtonStyle" Value="{StaticResource Tessel.CalendarButton}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Calendar}">
+                    <StackPanel x:Name="PART_Root" HorizontalAlignment="Center">
+                        <CalendarItem x:Name="PART_CalendarItem"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Style="{TemplateBinding CalendarItemStyle}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  DatePicker  -->
+    <Style x:Key="Tessel.DatePickerCalendar" BasedOn="{StaticResource {x:Type Calendar}}" TargetType="{x:Type Calendar}">
+        <Setter Property="Margin" Value="8,4,8,12" />
+        <Setter Property="Effect" Value="{DynamicResource Tessel.Shadow}" />
+    </Style>
+
+    <Style x:Key="Tessel.DatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="CaretBrush" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="WatermarkStates">
+                                <VisualState x:Name="Unwatermarked" />
+                                <VisualState x:Name="Watermarked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_ContentHost" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="PART_Watermark" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl x:Name="PART_Watermark"
+                                        Margin="2,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Focusable="False"
+                                        Foreground="{DynamicResource Tessel.TextTertiaryBrush}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0" />
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      VerticalAlignment="Center"
+                                      Focusable="False"
+                                      HorizontalScrollBarVisibility="Hidden"
+                                      VerticalScrollBarVisibility="Hidden" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type DatePicker}">
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Tessel.InputBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Tessel.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="10,6,4,6" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource Tessel.FontSize}" />
+        <Setter Property="IsTodayHighlighted" Value="True" />
+        <Setter Property="SelectedDateFormat" Value="Short" />
+        <Setter Property="CalendarStyle" Value="{StaticResource Tessel.DatePickerCalendar}" />
+        <Setter Property="h:ControlHelper.CornerRadius" Value="{DynamicResource Tessel.ControlCornerRadius}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DatePicker}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ContentPresenter x:Name="Header"
+                                          Margin="0,0,0,6"
+                                          Content="{TemplateBinding h:ControlHelper.Header}"
+                                          TextElement.Foreground="{DynamicResource Tessel.TextBrush}" />
+                        <Grid x:Name="PART_Root" Grid.Row="1">
+                            <Border x:Name="Bd"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding h:ControlHelper.CornerRadius}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <DatePickerTextBox x:Name="PART_TextBox"
+                                                       Margin="{TemplateBinding Padding}"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="{TemplateBinding Foreground}"
+                                                       Style="{StaticResource Tessel.DatePickerTextBox}" />
+                                    <Button x:Name="PART_Button"
+                                            Grid.Column="1"
+                                            Margin="0,0,3,0"
+                                            Content="&#xE787;"
+                                            Focusable="False"
+                                            Style="{StaticResource Tessel.CalendarNavButton}" />
+                                </Grid>
+                            </Border>
+                            <Popup x:Name="PART_Popup"
+                                   AllowsTransparency="True"
+                                   Placement="Bottom"
+                                   PlacementTarget="{Binding ElementName=PART_Root}"
+                                   PopupAnimation="Slide"
+                                   StaysOpen="False" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="h:ControlHelper.Header" Value="{x:Null}">
+                            <Setter TargetName="Header" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Tessel.BorderStrongBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

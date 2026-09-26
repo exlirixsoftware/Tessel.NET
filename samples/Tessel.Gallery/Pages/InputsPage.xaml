@@ -1,0 +1,113 @@
+<UserControl x:Class="Tessel.Gallery.Pages.InputsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Text &amp; Input" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Text boxes with headers, placeholders, icons and clear buttons, plus combo boxes, number boxes, date pickers and sliders." />
+
+            <tessel:Card Header="Text boxes" Style="{StaticResource Section}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBox Margin="0,0,0,16" tessel:ControlHelper.Header="Full name" tessel:ControlHelper.PlaceholderText="Jane Doe" />
+                        <TextBox Margin="0,0,0,16"
+                                 tessel:ControlHelper.Header="Email"
+                                 tessel:ControlHelper.Icon="{tessel:Glyph Mail}"
+                                 tessel:ControlHelper.PlaceholderText="name@example.com"
+                                 tessel:ControlHelper.ShowClearButton="True" />
+                        <PasswordBox Margin="0,0,0,16"
+                                     tessel:ControlHelper.Header="Password"
+                                     tessel:ControlHelper.Icon="{tessel:Glyph Lock}"
+                                     tessel:ControlHelper.PlaceholderText="At least 8 characters"
+                                     tessel:ControlHelper.ShowClearButton="True" />
+                        <TextBox tessel:ControlHelper.Header="Read-only" IsReadOnly="True" Text="This value can't be edited" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBox Height="118"
+                                 Margin="0,0,0,16"
+                                 VerticalContentAlignment="Top"
+                                 tessel:ControlHelper.Header="Multi-line"
+                                 tessel:ControlHelper.PlaceholderText="Write a few lines…"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 VerticalScrollBarVisibility="Auto" />
+                        <TextBox Margin="0,0,0,16"
+                                 tessel:ControlHelper.Icon="{tessel:Glyph Search}"
+                                 tessel:ControlHelper.PlaceholderText="Search…"
+                                 tessel:ControlHelper.ShowClearButton="True" />
+                        <TextBox tessel:ControlHelper.Header="Disabled" IsEnabled="False" Text="Disabled input" />
+                    </StackPanel>
+                </Grid>
+            </tessel:Card>
+
+            <tessel:Card Header="Combo boxes" Style="{StaticResource Section}">
+                <UniformGrid Columns="3">
+                    <ComboBox Margin="0,0,12,0" tessel:ControlHelper.Header="Country" tessel:ControlHelper.PlaceholderText="Pick a country">
+                        <ComboBoxItem Content="Austria" />
+                        <ComboBoxItem Content="Germany" />
+                        <ComboBoxItem Content="Romania" />
+                        <ComboBoxItem Content="Switzerland" />
+                        <ComboBoxItem Content="United Kingdom" />
+                        <ComboBoxItem Content="United States" />
+                    </ComboBox>
+                    <ComboBox Margin="6,0" tessel:ControlHelper.Header="Font size" SelectedIndex="1">
+                        <ComboBoxItem Content="Small" />
+                        <ComboBoxItem Content="Medium" />
+                        <ComboBoxItem Content="Large" />
+                    </ComboBox>
+                    <ComboBox Margin="12,0,0,0" tessel:ControlHelper.Header="Editable" IsEditable="True" Text="Custom value">
+                        <ComboBoxItem Content="Apple" />
+                        <ComboBoxItem Content="Banana" />
+                        <ComboBoxItem Content="Cherry" />
+                    </ComboBox>
+                </UniformGrid>
+            </tessel:Card>
+
+            <tessel:Card Header="Numbers &amp; dates" Style="{StaticResource Section}">
+                <UniformGrid Columns="3">
+                    <tessel:NumberBox Margin="0,0,12,0"
+                                      tessel:ControlHelper.Header="Quantity (0–100)"
+                                      Maximum="100"
+                                      Minimum="0"
+                                      Value="12" />
+                    <tessel:NumberBox Margin="6,0"
+                                      tessel:ControlHelper.Header="Price"
+                                      SmallChange="0.25"
+                                      StringFormat="C2"
+                                      Value="19.99" />
+                    <DatePicker Margin="12,0,0,0" tessel:ControlHelper.Header="Due date" />
+                </UniformGrid>
+            </tessel:Card>
+
+            <tessel:Card Header="Sliders" Style="{StaticResource Section}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <DockPanel Margin="0,0,0,8">
+                            <TextBlock DockPanel.Dock="Right" Style="{StaticResource Tessel.Text.Secondary}" Text="{Binding Value, ElementName=VolumeSlider, StringFormat={}{0:0}%}" />
+                            <TextBlock Text="Volume" />
+                        </DockPanel>
+                        <Slider x:Name="VolumeSlider" Maximum="100" Value="64" />
+                        <TextBlock Margin="0,20,0,8" Text="With ticks" />
+                        <Slider IsSnapToTickEnabled="True" Maximum="10" TickFrequency="1" TickPlacement="BottomRight" Value="4" />
+                        <TextBlock Margin="0,20,0,8" Text="Disabled" />
+                        <Slider IsEnabled="False" Maximum="100" Value="30" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="48,0,24,0" Orientation="Horizontal">
+                        <Slider Height="160" Margin="0,0,16,0" Maximum="100" Orientation="Vertical" Value="70" />
+                        <Slider Height="160" Maximum="100" Orientation="Vertical" Value="30" />
+                    </StackPanel>
+                </Grid>
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

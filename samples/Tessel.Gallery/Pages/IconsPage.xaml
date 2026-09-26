@@ -1,0 +1,60 @@
+<UserControl x:Class="Tessel.Gallery.Pages.IconsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <Grid Margin="36,28,36,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Style="{StaticResource PageTitle}" Text="Icons" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Built-in Symbol glyphs from Segoe Fluent Icons. Click an icon to copy its XAML." />
+        </StackPanel>
+        <TextBox x:Name="Filter"
+                 Grid.Row="1"
+                 MaxWidth="360"
+                 Margin="0,0,0,16"
+                 HorizontalAlignment="Left"
+                 tessel:ControlHelper.Icon="{tessel:Glyph Filter}"
+                 tessel:ControlHelper.PlaceholderText="Filter icons"
+                 tessel:ControlHelper.ShowClearButton="True"
+                 TextChanged="OnFilterChanged" />
+        <ListBox x:Name="IconList"
+                 Grid.Row="2"
+                 Margin="0,0,0,24"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 Padding="0"
+                 SelectionChanged="OnIconSelected">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="ListBoxItem">
+                    <Setter Property="Width" Value="112" />
+                    <Setter Property="Height" Value="96" />
+                    <Setter Property="Margin" Value="0,0,8,8" />
+                    <Setter Property="Padding" Value="8" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <tessel:FontIcon HorizontalAlignment="Center" FontSize="24" Symbol="{Binding}" />
+                        <TextBlock Margin="0,10,0,0"
+                                   HorizontalAlignment="Center"
+                                   Style="{StaticResource Tessel.Text.Caption}"
+                                   Text="{Binding}"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

@@ -1,0 +1,109 @@
+<UserControl x:Class="Tessel.Gallery.Pages.HomePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+
+            <!--  Hero  -->
+            <Border Margin="0,0,0,24"
+                    Padding="36,32"
+                    CornerRadius="{DynamicResource Tessel.LargeCornerRadius}">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0" Color="{DynamicResource Tessel.AccentColor}" />
+                        <GradientStop Offset="1" Color="#FF7C3AED" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel>
+                    <TextBlock FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="#CCFFFFFF"
+                               Text="TESSEL UI FOR WPF" />
+                    <TextBlock Margin="0,8,0,8"
+                               Foreground="White"
+                               Style="{StaticResource Tessel.Text.Display}"
+                               Text="Build beautiful desktop apps." />
+                    <TextBlock MaxWidth="620"
+                               HorizontalAlignment="Left"
+                               FontSize="15"
+                               Foreground="#E6FFFFFF"
+                               Text="A themeable control library with light &amp; dark themes, custom accent colors, restyled standard controls and a set of modern components — windows, navigation, dialogs, notifications and more."
+                               TextWrapping="Wrap" />
+                    <StackPanel Margin="0,24,0,0" Orientation="Horizontal">
+                        <Button Margin="0,0,8,0"
+                                Background="White"
+                                BorderBrush="White"
+                                Click="OnGetStarted"
+                                Content="Explore controls"
+                                Foreground="#FF1B1F24"
+                                tessel:ControlHelper.HoverBackground="#FFF2F2F2"
+                                tessel:ControlHelper.Icon="{tessel:Glyph Forward}"
+                                tessel:ControlHelper.PressedBackground="#FFE5E5E5" />
+                        <Button Background="#26FFFFFF"
+                                BorderBrush="#40FFFFFF"
+                                Click="OnOpenSettings"
+                                Content="Theme settings"
+                                Foreground="White"
+                                tessel:ControlHelper.HoverBackground="#40FFFFFF"
+                                tessel:ControlHelper.Icon="{tessel:Glyph Color}"
+                                tessel:ControlHelper.PressedBackground="#55FFFFFF" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!--  Feature grid  -->
+            <UniformGrid Margin="-8,0" Columns="3">
+                <tessel:Card Margin="8" IsElevated="True">
+                    <StackPanel>
+                        <tessel:FontIcon Margin="0,0,0,12" HorizontalAlignment="Left" FontSize="24" Foreground="{DynamicResource Tessel.AccentBrush}" Symbol="Color" />
+                        <TextBlock Style="{StaticResource Tessel.Text.BodyStrong}" Text="Theming" />
+                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="Light, dark or system theme with any accent color, switchable at runtime." />
+                    </StackPanel>
+                </tessel:Card>
+                <tessel:Card Margin="8" IsElevated="True">
+                    <StackPanel>
+                        <tessel:FontIcon Margin="0,0,0,12" HorizontalAlignment="Left" FontSize="24" Foreground="{DynamicResource Tessel.AccentBrush}" Symbol="ViewAll" />
+                        <TextBlock Style="{StaticResource Tessel.Text.BodyStrong}" Text="40+ styled controls" />
+                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="Every standard WPF control restyled — just merge one dictionary." />
+                    </StackPanel>
+                </tessel:Card>
+                <tessel:Card Margin="8" IsElevated="True">
+                    <StackPanel>
+                        <tessel:FontIcon Margin="0,0,0,12" HorizontalAlignment="Left" FontSize="24" Foreground="{DynamicResource Tessel.AccentBrush}" Symbol="Code" />
+                        <TextBlock Style="{StaticResource Tessel.Text.BodyStrong}" Text="MVVM ready" />
+                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="ObservableObject, RelayCommand, AsyncRelayCommand and converters included." />
+                    </StackPanel>
+                </tessel:Card>
+            </UniformGrid>
+
+            <!--  Getting started  -->
+            <tessel:Card Margin="0,16,0,0" Header="Getting started">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="1. Reference Tessel.UI and merge the theme into App.xaml:" />
+                    <Border Margin="0,8,0,16"
+                            Padding="16,12"
+                            Background="{DynamicResource Tessel.SubtleBrush}"
+                            CornerRadius="{DynamicResource Tessel.ControlCornerRadius}">
+                        <TextBlock Style="{StaticResource Tessel.Text.Code}" xml:space="preserve">&lt;Application xmlns:tessel="http://schemas.tessel.net/ui" ...&gt;
+  &lt;Application.Resources&gt;
+    &lt;ResourceDictionary&gt;
+      &lt;ResourceDictionary.MergedDictionaries&gt;
+        &lt;tessel:ThemeResources Theme="System" Accent="#4F46E5" /&gt;
+      &lt;/ResourceDictionary.MergedDictionaries&gt;
+    &lt;/ResourceDictionary&gt;
+  &lt;/Application.Resources&gt;
+&lt;/Application&gt;</TextBlock>
+                    </Border>
+                    <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="2. Optionally derive your windows from TesselWindow for the custom title bar:" />
+                    <Border Margin="0,8,0,0"
+                            Padding="16,12"
+                            Background="{DynamicResource Tessel.SubtleBrush}"
+                            CornerRadius="{DynamicResource Tessel.ControlCornerRadius}">
+                        <TextBlock Style="{StaticResource Tessel.Text.Code}" xml:space="preserve">&lt;tessel:TesselWindow x:Class="MyApp.MainWindow" ...&gt;</TextBlock>
+                    </Border>
+                </StackPanel>
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

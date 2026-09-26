@@ -1,0 +1,96 @@
+<UserControl x:Class="Tessel.Gallery.Pages.LayoutPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Layout" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Cards, expanders, group boxes, settings cards, avatars and separators." />
+
+            <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Subtitle}" Text="Cards" />
+            <UniformGrid Margin="-8,0,-8,16" Columns="3">
+                <tessel:Card Margin="8" Header="Flat card">
+                    <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="A surface with a border, header and padding." />
+                </tessel:Card>
+                <tessel:Card Margin="8" Header="Elevated card" IsElevated="True">
+                    <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="IsElevated adds a soft drop shadow." />
+                </tessel:Card>
+                <tessel:Card Margin="8" Padding="0">
+                    <StackPanel>
+                        <Border Height="72" CornerRadius="8,8,0,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Offset="0" Color="#FF06B6D4" />
+                                    <GradientStop Offset="1" Color="{DynamicResource Tessel.AccentColor}" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <StackPanel Margin="16">
+                            <TextBlock Style="{StaticResource Tessel.Text.BodyStrong}" Text="Media card" />
+                            <TextBlock Style="{StaticResource Tessel.Text.Caption}" Text="Padding=&quot;0&quot; with custom content" />
+                        </StackPanel>
+                    </StackPanel>
+                </tessel:Card>
+            </UniformGrid>
+
+            <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Subtitle}" Text="Settings cards" />
+            <StackPanel Margin="0,0,0,24">
+                <tessel:SettingsCard Margin="0,0,0,4"
+                                     Description="Receive alerts for mentions and replies"
+                                     Header="Notifications"
+                                     Icon="{tessel:Glyph Ringer}">
+                    <tessel:ToggleSwitch IsChecked="True" />
+                </tessel:SettingsCard>
+                <tessel:SettingsCard Margin="0,0,0,4"
+                                     Description="Choose the language used across the app"
+                                     Header="Language"
+                                     Icon="{tessel:Glyph Globe}">
+                    <ComboBox MinWidth="160" SelectedIndex="0">
+                        <ComboBoxItem Content="English" />
+                        <ComboBoxItem Content="Deutsch" />
+                        <ComboBoxItem Content="Română" />
+                    </ComboBox>
+                </tessel:SettingsCard>
+                <tessel:SettingsCard Description="Sign in on another device" Header="Account" Icon="{tessel:Glyph Contact}">
+                    <Button Content="Manage" />
+                </tessel:SettingsCard>
+            </StackPanel>
+
+            <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Subtitle}" Text="Expanders &amp; group boxes" />
+            <Expander Margin="0,0,0,8" Header="What is Tessel?" IsExpanded="True">
+                <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="Tessel is a WPF UI framework that restyles the standard controls and adds modern components on top." />
+            </Expander>
+            <Expander Margin="0,0,0,16" Header="How do I change the accent color?">
+                <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="Call ThemeManager.SetAccent(color) or set Accent on ThemeResources in App.xaml." />
+            </Expander>
+            <GroupBox Margin="0,0,0,24" Header="Shipping address">
+                <UniformGrid Columns="2">
+                    <TextBox Margin="0,0,8,0" tessel:ControlHelper.PlaceholderText="Street" />
+                    <TextBox Margin="8,0,0,0" tessel:ControlHelper.PlaceholderText="City" />
+                </UniformGrid>
+            </GroupBox>
+
+            <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Subtitle}" Text="Avatars" />
+            <tessel:Card Style="{StaticResource Section}">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <tessel:Avatar Width="24" Height="24" Margin="0,0,12,0" DisplayName="Ada Lovelace" />
+                        <tessel:Avatar Width="32" Height="32" Margin="0,0,12,0" DisplayName="Grace Hopper" />
+                        <tessel:Avatar Margin="0,0,12,0" DisplayName="Alan Turing" />
+                        <tessel:Avatar Width="56" Height="56" Margin="0,0,12,0" DisplayName="Margaret Hamilton" />
+                        <tessel:Avatar Width="72" Height="72" DisplayName="Linus" />
+                    </StackPanel>
+                    <Separator />
+                    <StackPanel Orientation="Horizontal">
+                        <tessel:Avatar Margin="0,0,12,0" VerticalAlignment="Center" DisplayName="Barbara Liskov" />
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Style="{StaticResource Tessel.Text.BodyStrong}" Text="Barbara Liskov" />
+                            <TextBlock Style="{StaticResource Tessel.Text.Caption}" Text="Architect · Platform" />
+                        </StackPanel>
+                        <tessel:Badge Margin="16,0,0,0" Content="Admin" Kind="Accent" />
+                    </StackPanel>
+                </StackPanel>
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

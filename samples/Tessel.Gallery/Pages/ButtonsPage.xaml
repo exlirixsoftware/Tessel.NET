@@ -1,0 +1,62 @@
+<UserControl x:Class="Tessel.Gallery.Pages.ButtonsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Buttons" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Button variants, icon buttons, toggle and repeat buttons and links." />
+
+            <tessel:Card Header="Variants" Style="{StaticResource Section}">
+                <WrapPanel>
+                    <Button Margin="0,0,8,8" Content="Standard" />
+                    <Button Margin="0,0,8,8" Content="Accent" Style="{StaticResource Tessel.Button.Accent}" />
+                    <Button Margin="0,0,8,8" Content="Outline" Style="{StaticResource Tessel.Button.Outline}" />
+                    <Button Margin="0,0,8,8" Content="Subtle" Style="{StaticResource Tessel.Button.Subtle}" />
+                    <Button Margin="0,0,8,8" Content="Danger" Style="{StaticResource Tessel.Button.Danger}" />
+                    <Button Margin="0,0,8,8" Content="Disabled" IsEnabled="False" />
+                    <Button Margin="0,0,8,8" Content="Accent disabled" IsEnabled="False" Style="{StaticResource Tessel.Button.Accent}" />
+                </WrapPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="With icons" Style="{StaticResource Section}">
+                <WrapPanel>
+                    <Button Margin="0,0,8,8" Content="Save" tessel:ControlHelper.Icon="{tessel:Glyph Save}" Style="{StaticResource Tessel.Button.Accent}" />
+                    <Button Margin="0,0,8,8" Content="Share" tessel:ControlHelper.Icon="{tessel:Glyph Share}" />
+                    <Button Margin="0,0,8,8" Content="Download" tessel:ControlHelper.Icon="{tessel:Glyph Download}" Style="{StaticResource Tessel.Button.Outline}" />
+                    <Button Margin="0,0,8,8" Content="Delete" tessel:ControlHelper.Icon="{tessel:Glyph Delete}" Style="{StaticResource Tessel.Button.Danger}" />
+                    <Button Margin="0,0,8,8" tessel:ControlHelper.Icon="{tessel:Glyph Settings}" ToolTip="Icon only (standard)" />
+                </WrapPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Icon buttons" Style="{StaticResource Section}">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="{tessel:Glyph Edit}" Style="{StaticResource Tessel.Button.Icon}" ToolTip="Edit" />
+                    <Button Content="{tessel:Glyph Copy}" Style="{StaticResource Tessel.Button.Icon}" ToolTip="Copy" />
+                    <Button Content="{tessel:Glyph Delete}" Style="{StaticResource Tessel.Button.Icon}" ToolTip="Delete" />
+                    <Button Content="{tessel:Glyph FavoriteStar}" Style="{StaticResource Tessel.Button.Icon}" ToolTip="Favorite" />
+                    <Button Content="{tessel:Glyph More}" Style="{StaticResource Tessel.Button.Icon}" ToolTip="More" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Toggle, repeat &amp; link" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel>
+                        <ToggleButton Margin="0,0,8,8" Content="Bold" tessel:ControlHelper.Icon="&#xE8DD;" />
+                        <ToggleButton Margin="0,0,8,8" Content="Checked" IsChecked="True" />
+                        <RepeatButton x:Name="Repeat" Margin="0,0,8,8" Click="OnRepeat" Content="Hold to count" />
+                        <TextBlock x:Name="RepeatCount" Margin="8,0,0,8" VerticalAlignment="Center" Style="{StaticResource Tessel.Text.Secondary}" Text="0" />
+                    </WrapPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Link button" Style="{StaticResource Tessel.Button.Link}" />
+                        <TextBlock Margin="24,0,0,0" VerticalAlignment="Center">
+                            <Run Text="Inline" />
+                            <Hyperlink NavigateUri="https://learn.microsoft.com/dotnet/desktop/wpf/" RequestNavigate="OnRequestNavigate">hyperlink</Hyperlink>
+                            <Run Text="inside text." />
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

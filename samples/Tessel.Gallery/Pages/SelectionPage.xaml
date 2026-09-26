@@ -1,0 +1,54 @@
+<UserControl x:Class="Tessel.Gallery.Pages.SelectionPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Selection" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Check boxes, radio buttons and toggle switches." />
+
+            <UniformGrid Margin="-8,0" Columns="3">
+                <tessel:Card Margin="8,0,8,16" Header="Check boxes">
+                    <StackPanel>
+                        <CheckBox Content="Unchecked" />
+                        <CheckBox Content="Checked" IsChecked="True" />
+                        <CheckBox Content="Indeterminate" IsChecked="{x:Null}" IsThreeState="True" />
+                        <CheckBox Content="Disabled" IsEnabled="False" />
+                        <CheckBox Content="Disabled checked" IsChecked="True" IsEnabled="False" />
+                    </StackPanel>
+                </tessel:Card>
+                <tessel:Card Margin="8,0,8,16" Header="Radio buttons">
+                    <StackPanel>
+                        <RadioButton Content="Standard shipping" GroupName="Shipping" IsChecked="True" />
+                        <RadioButton Content="Express shipping" GroupName="Shipping" />
+                        <RadioButton Content="Pick up in store" GroupName="Shipping" />
+                        <RadioButton Content="Unavailable" GroupName="Shipping" IsEnabled="False" />
+                    </StackPanel>
+                </tessel:Card>
+                <tessel:Card Margin="8,0,8,16" Header="Toggle switches">
+                    <StackPanel>
+                        <tessel:ToggleSwitch Margin="0,0,0,8" Content="Wi-Fi" IsChecked="True" />
+                        <tessel:ToggleSwitch Margin="0,0,0,8" Content="Bluetooth" />
+                        <tessel:ToggleSwitch Margin="0,0,0,8" OffContent="Off" OnContent="On" />
+                        <tessel:ToggleSwitch Content="Disabled" IsEnabled="False" />
+                    </StackPanel>
+                </tessel:Card>
+            </UniformGrid>
+
+            <tessel:Card Header="Select all pattern" Style="{StaticResource Section}">
+                <StackPanel>
+                    <CheckBox x:Name="SelectAll"
+                              Checked="OnSelectAllChanged"
+                              Content="Select all toppings"
+                              FontWeight="SemiBold"
+                              Unchecked="OnSelectAllChanged" />
+                    <StackPanel x:Name="Toppings" Margin="30,4,0,0">
+                        <CheckBox Checked="OnOptionChanged" Content="Cheese" Unchecked="OnOptionChanged" />
+                        <CheckBox Checked="OnOptionChanged" Content="Mushrooms" Unchecked="OnOptionChanged" />
+                        <CheckBox Checked="OnOptionChanged" Content="Olives" Unchecked="OnOptionChanged" />
+                    </StackPanel>
+                </StackPanel>
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

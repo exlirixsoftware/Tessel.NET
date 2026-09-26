@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  Implicit styles for the standard WPF controls.  -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/Button.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/CheckBox.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/TextBox.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/ComboBox.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/ScrollViewer.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/Slider.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/ProgressBar.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/ListBox.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/TabControl.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/Expander.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/Menu.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/DataGrid.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/TreeView.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/DatePicker.xaml" />
+        <ResourceDictionary Source="/Tessel.UI;component/Themes/Controls/Misc.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

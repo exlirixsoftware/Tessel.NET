@@ -1,0 +1,160 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  CheckBox  -->
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Tessel.InputBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Tessel.TextTertiaryBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource Tessel.FontSize}" />
+        <Setter Property="MinHeight" Value="28" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Tessel.FocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Box"
+                                Width="20"
+                                Height="20"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1.5"
+                                CornerRadius="4">
+                            <Grid>
+                                <Path x:Name="Check"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Data="M 0,4.5 L 3.8,8.3 L 11,1"
+                                      Stroke="{DynamicResource Tessel.OnAccentBrush}"
+                                      StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeThickness="2"
+                                      Visibility="Collapsed" />
+                                <Rectangle x:Name="Indeterminate"
+                                           Width="10"
+                                           Height="2"
+                                           RadiusX="1"
+                                           RadiusY="1"
+                                           Fill="{DynamicResource Tessel.OnAccentBrush}"
+                                           Visibility="Collapsed" />
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="ContentHost"
+                                          Grid.Column="1"
+                                          Margin="10,0,0,0"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Focusable="False"
+                                          RecognizesAccessKey="True" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="False">
+                            <Setter TargetName="ContentHost" Property="Margin" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource Tessel.TextSecondaryBrush}" />
+                            <Setter TargetName="Box" Property="Background" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Box" Property="Background" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="Check" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="Box" Property="Background" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="Indeterminate" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsChecked" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Box" Property="Background" Value="{DynamicResource Tessel.AccentHoverBrush}" />
+                            <Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource Tessel.AccentHoverBrush}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  RadioButton  -->
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Tessel.InputBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Tessel.TextTertiaryBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource Tessel.FontSize}" />
+        <Setter Property="MinHeight" Value="28" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Tessel.FocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="20" Height="20" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Ellipse x:Name="Outer"
+                                     Fill="{TemplateBinding Background}"
+                                     Stroke="{TemplateBinding BorderBrush}"
+                                     StrokeThickness="1.5" />
+                            <Ellipse x:Name="Dot"
+                                     Width="8"
+                                     Height="8"
+                                     Fill="{DynamicResource Tessel.OnAccentBrush}"
+                                     Visibility="Collapsed" />
+                        </Grid>
+                        <ContentPresenter x:Name="ContentHost"
+                                          Grid.Column="1"
+                                          Margin="10,0,0,0"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Focusable="False"
+                                          RecognizesAccessKey="True" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="False">
+                            <Setter TargetName="ContentHost" Property="Margin" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Outer" Property="Stroke" Value="{DynamicResource Tessel.TextSecondaryBrush}" />
+                            <Setter TargetName="Outer" Property="Fill" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Outer" Property="Fill" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="Outer" Property="Stroke" Value="{DynamicResource Tessel.AccentBrush}" />
+                            <Setter TargetName="Dot" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsChecked" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Dot" Property="Width" Value="10" />
+                            <Setter TargetName="Dot" Property="Height" Value="10" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
