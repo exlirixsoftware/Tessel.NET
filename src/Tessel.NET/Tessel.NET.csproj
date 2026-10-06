@@ -5,8 +5,32 @@
     <AssemblyName>Tessel.NET</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <PackageId>Tessel.NET</PackageId>
-    <Description>A modern, themeable WPF UI framework: light/dark themes, accent colors, restyled standard controls and a set of custom controls.</Description>
   </PropertyGroup>
+
+  <!-- NuGet package: dotnet pack src/Tessel.NET -c Release -->
+  <PropertyGroup>
+    <PackageId>Tessel.NET</PackageId>
+    <Title>Tessel.NET</Title>
+    <Description>A modern, themeable WPF UI framework for .NET 10: light/dark/system themes, accent colors, restyled standard controls and 30+ custom controls (NavigationView, TabView, AutoSuggestBox, ColorPicker, file dialogs and more).</Description>
+    <Company>EXLIRIX Software</Company>
+    <Copyright>Copyright (c) 2026 EXLIRIX Software &amp; Jurca Alexandru-Cristian</Copyright>
+    <PackageTags>wpf;ui;xaml;controls;theme;dark-mode;fluent;desktop;windows;dotnet</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/exlirixsoftware/Tessel.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/exlirixsoftware/Tessel.NET.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageReleaseNotes>See https://github.com/exlirixsoftware/Tessel.NET/blob/main/CHANGELOG.md</PackageReleaseNotes>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="Resources\logo.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>

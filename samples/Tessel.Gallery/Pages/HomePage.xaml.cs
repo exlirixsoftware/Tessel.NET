@@ -13,4 +13,18 @@ public partial class HomePage : UserControl
     private void OnGetStarted(object sender, RoutedEventArgs e) => Navigation?.Navigate(typeof(ButtonsPage));
 
     private void OnOpenSettings(object sender, RoutedEventArgs e) => Navigation?.Navigate(typeof(SettingsPage));
+
+    private void OnOpenPage(object sender, RoutedEventArgs e)
+    {
+        var page = ((Button)sender).Tag switch
+        {
+            "Dialogs" => typeof(DialogsPage),
+            "Navigation" => typeof(NavigationPage),
+            "Inputs" => typeof(InputsPage),
+            "Buttons" => typeof(ButtonsPage),
+            "Feedback" => typeof(FeedbackPage),
+            _ => null,
+        };
+        if (page != null) Navigation?.Navigate(page);
+    }
 }

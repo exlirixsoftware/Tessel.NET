@@ -108,6 +108,68 @@
                     </StackPanel>
                 </Grid>
             </tessel:Card>
+
+            <tessel:Card Header="AutoSuggestBox" Style="{StaticResource Section}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="420" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <tessel:AutoSuggestBox x:Name="CountryBox"
+                                           tessel:ControlHelper.Header="Country"
+                                           PlaceholderText="Type a country…"
+                                           QuerySubmitted="OnCountryQuery"
+                                           TextChanged="OnCountryTextChanged" />
+                    <TextBlock x:Name="CountryStatus"
+                               Grid.Column="1"
+                               Margin="24,26,0,0"
+                               VerticalAlignment="Top"
+                               Style="{StaticResource Tessel.Text.Secondary}"
+                               Text="Submitted: —" />
+                </Grid>
+            </tessel:Card>
+
+            <tessel:Card Header="TimePicker" Style="{StaticResource Section}">
+                <StackPanel Orientation="Horizontal">
+                    <tessel:TimePicker x:Name="Alarm"
+                                       Margin="0,0,24,0"
+                                       tessel:ControlHelper.Header="Alarm (12-hour)"
+                                       Is24Hour="False"
+                                       SelectedTime="07:30:00" />
+                    <tessel:TimePicker Margin="0,0,24,0"
+                                       tessel:ControlHelper.Header="Meeting (24-hour, 15 min)"
+                                       Is24Hour="True"
+                                       MinuteIncrement="15" />
+                    <TextBlock VerticalAlignment="Bottom" Style="{StaticResource Tessel.Text.Secondary}" Text="{Binding SelectedTime, ElementName=Alarm, StringFormat='Alarm: {0:hh\:mm}'}" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="RatingControl" Style="{StaticResource Section}">
+                <StackPanel>
+                    <tessel:RatingControl x:Name="Rating" Caption="{Binding Value, ElementName=Rating, StringFormat='{}{0:0} of 5'}" Value="3" />
+                    <TextBlock Margin="0,16,0,8" Style="{StaticResource Tessel.Text.Secondary}" Text="Read-only, 10 stars" />
+                    <tessel:RatingControl FontSize="16" IsReadOnly="True" MaxRating="10" Value="7" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="ColorPicker" Style="{StaticResource Section}">
+                <StackPanel Orientation="Horizontal">
+                    <tessel:ColorPicker x:Name="Picker" Margin="0,0,40,0" Color="#4F46E5" />
+                    <tessel:ColorPicker Margin="0,0,40,0" IsAlphaEnabled="True" Color="#99E11D48" />
+                    <StackPanel VerticalAlignment="Top">
+                        <TextBlock Margin="0,0,0,8" Text="Preview" />
+                        <Border Width="160"
+                                Height="90"
+                                BorderBrush="{DynamicResource Tessel.BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="8">
+                            <Border.Background>
+                                <SolidColorBrush Color="{Binding Color, ElementName=Picker}" />
+                            </Border.Background>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </tessel:Card>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

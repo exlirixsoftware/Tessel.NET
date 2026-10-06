@@ -1,0 +1,284 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:Tessel.NET.Controls">
+
+    <!--  Skeleton (shimmering placeholder)  -->
+    <Style TargetType="{x:Type c:Skeleton}">
+        <Setter Property="Height" Value="16" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:Skeleton}">
+                    <Border x:Name="Shimmer"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            SnapsToDevicePixels="True">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TranslateTransform X="0" />
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Offset="0" Color="{DynamicResource Tessel.SubtleColor}" />
+                                <GradientStop Offset="0.5" Color="{DynamicResource Tessel.BorderColor}" />
+                                <GradientStop Offset="1" Color="{DynamicResource Tessel.SubtleColor}" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsCircle" Value="True">
+                            <Setter TargetName="Shimmer" Property="CornerRadius" Value="999" />
+                        </Trigger>
+                        <Trigger Property="IsActive" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="ShimmerStoryboard">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation Storyboard.TargetName="Shimmer"
+                                                         Storyboard.TargetProperty="(Border.Background).(Brush.RelativeTransform).(TranslateTransform.X)"
+                                                         From="-1"
+                                                         To="1"
+                                                         Duration="0:0:1.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="ShimmerStoryboard" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Stepper  -->
+    <ControlTemplate x:Key="Tessel.StepperItem.Horizontal" TargetType="{x:Type c:StepperItem}">
+        <Grid Margin="0,0,0,4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Width="28" Height="28">
+                    <Ellipse x:Name="Circle"
+                             Fill="{DynamicResource Tessel.SurfaceBrush}"
+                             Stroke="{DynamicResource Tessel.BorderStrongBrush}"
+                             StrokeThickness="2" />
+                    <TextBlock x:Name="Number"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource Tessel.TextSecondaryBrush}"
+                               Text="{TemplateBinding Index}" />
+                    <TextBlock x:Name="Glyph"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                               FontSize="12"
+                               Foreground="{DynamicResource Tessel.OnAccentBrush}"
+                               Visibility="Collapsed" />
+                </Grid>
+                <Rectangle x:Name="Line"
+                           Grid.Column="1"
+                           Height="2"
+                           Margin="8,0,8,0"
+                           VerticalAlignment="Center"
+                           Fill="{DynamicResource Tessel.BorderStrongBrush}"
+                           RadiusX="1"
+                           RadiusY="1" />
+            </Grid>
+            <StackPanel Grid.Row="1" Margin="0,8,12,0">
+                <ContentPresenter x:Name="HeaderHost"
+                                  Content="{TemplateBinding Header}"
+                                  TextElement.FontWeight="SemiBold" />
+                <ContentPresenter x:Name="DescriptionHost"
+                                  Margin="0,2,0,0"
+                                  Content="{TemplateBinding Description}"
+                                  TextElement.FontSize="{DynamicResource Tessel.FontSizeSmall}"
+                                  TextElement.Foreground="{DynamicResource Tessel.TextSecondaryBrush}" />
+                <ContentPresenter x:Name="Body" Margin="0,8,0,0" />
+            </StackPanel>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Header" Value="{x:Null}">
+                <Setter TargetName="HeaderHost" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="Description" Value="{x:Null}">
+                <Setter TargetName="DescriptionHost" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="HasContent" Value="False">
+                <Setter TargetName="Body" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsLast" Value="True">
+                <Setter TargetName="Line" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="State" Value="Pending">
+                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{DynamicResource Tessel.TextSecondaryBrush}" />
+            </Trigger>
+            <Trigger Property="State" Value="Current">
+                <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter TargetName="Number" Property="Foreground" Value="{DynamicResource Tessel.AccentBrush}" />
+            </Trigger>
+            <Trigger Property="State" Value="Completed">
+                <Setter TargetName="Circle" Property="Fill" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter TargetName="Line" Property="Fill" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter TargetName="Number" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="Glyph" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Glyph" Property="Text" Value="&#xE73E;" />
+            </Trigger>
+            <Trigger Property="State" Value="Error">
+                <Setter TargetName="Circle" Property="Fill" Value="{DynamicResource Tessel.DangerBrush}" />
+                <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource Tessel.DangerBrush}" />
+                <Setter TargetName="Number" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="Glyph" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Glyph" Property="Text" Value="&#xE711;" />
+                <Setter TargetName="Glyph" Property="Foreground" Value="White" />
+                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{DynamicResource Tessel.DangerBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="Tessel.StepperItem.Vertical" TargetType="{x:Type c:StepperItem}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Width="28" Height="28">
+                    <Ellipse x:Name="Circle"
+                             Fill="{DynamicResource Tessel.SurfaceBrush}"
+                             Stroke="{DynamicResource Tessel.BorderStrongBrush}"
+                             StrokeThickness="2" />
+                    <TextBlock x:Name="Number"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource Tessel.TextSecondaryBrush}"
+                               Text="{TemplateBinding Index}" />
+                    <TextBlock x:Name="Glyph"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                               FontSize="12"
+                               Foreground="{DynamicResource Tessel.OnAccentBrush}"
+                               Visibility="Collapsed" />
+                </Grid>
+                <Rectangle x:Name="Line"
+                           Grid.Row="1"
+                           Width="2"
+                           MinHeight="20"
+                           Margin="0,4,0,4"
+                           HorizontalAlignment="Center"
+                           Fill="{DynamicResource Tessel.BorderStrongBrush}"
+                           RadiusX="1"
+                           RadiusY="1" />
+            </Grid>
+            <StackPanel x:Name="TextPanel"
+                        Grid.Column="1"
+                        Margin="14,3,0,18">
+                <ContentPresenter x:Name="HeaderHost"
+                                  Content="{TemplateBinding Header}"
+                                  TextElement.FontWeight="SemiBold" />
+                <ContentPresenter x:Name="DescriptionHost"
+                                  Margin="0,2,0,0"
+                                  Content="{TemplateBinding Description}"
+                                  TextElement.FontSize="{DynamicResource Tessel.FontSizeSmall}"
+                                  TextElement.Foreground="{DynamicResource Tessel.TextSecondaryBrush}" />
+                <ContentPresenter x:Name="Body" Margin="0,8,0,0" />
+            </StackPanel>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Header" Value="{x:Null}">
+                <Setter TargetName="HeaderHost" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="Description" Value="{x:Null}">
+                <Setter TargetName="DescriptionHost" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="HasContent" Value="False">
+                <Setter TargetName="Body" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsLast" Value="True">
+                <Setter TargetName="Line" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="TextPanel" Property="Margin" Value="14,3,0,0" />
+            </Trigger>
+            <Trigger Property="State" Value="Pending">
+                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{DynamicResource Tessel.TextSecondaryBrush}" />
+            </Trigger>
+            <Trigger Property="State" Value="Current">
+                <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter TargetName="Number" Property="Foreground" Value="{DynamicResource Tessel.AccentBrush}" />
+            </Trigger>
+            <Trigger Property="State" Value="Completed">
+                <Setter TargetName="Circle" Property="Fill" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter TargetName="Line" Property="Fill" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter TargetName="Number" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="Glyph" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Glyph" Property="Text" Value="&#xE73E;" />
+            </Trigger>
+            <Trigger Property="State" Value="Error">
+                <Setter TargetName="Circle" Property="Fill" Value="{DynamicResource Tessel.DangerBrush}" />
+                <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource Tessel.DangerBrush}" />
+                <Setter TargetName="Number" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="Glyph" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Glyph" Property="Text" Value="&#xE711;" />
+                <Setter TargetName="Glyph" Property="Foreground" Value="White" />
+                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{DynamicResource Tessel.DangerBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type c:StepperItem}">
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource Tessel.FontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Template" Value="{StaticResource Tessel.StepperItem.Horizontal}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource Tessel.StepperItem.Vertical}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type c:Stepper}">
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:Stepper}">
+                    <ItemsPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

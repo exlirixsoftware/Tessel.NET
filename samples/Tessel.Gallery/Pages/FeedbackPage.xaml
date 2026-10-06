@@ -29,6 +29,11 @@
                             <tessel:ProgressRing Width="48" Height="48" Thickness="4" IsActive="{Binding IsChecked, ElementName=RingToggle}" />
                         </StackPanel>
                         <tessel:ToggleSwitch x:Name="RingToggle" Margin="0,16,0,0" Content="Active" IsChecked="True" />
+                        <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
+                            <tessel:ProgressRing Width="48" Height="48" Margin="0,0,16,0" IsIndeterminate="False" Thickness="4" Value="{Binding Value, ElementName=ProgressSlider}" />
+                            <tessel:ProgressRing Width="28" Height="28" Margin="0,0,16,0" Foreground="{DynamicResource Tessel.SuccessBrush}" IsIndeterminate="False" Thickness="3" Value="80" />
+                            <TextBlock VerticalAlignment="Center" Style="{StaticResource Tessel.Text.Secondary}" Text="Determinate" />
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </tessel:Card>
@@ -80,9 +85,59 @@
                     <WrapPanel>
                         <Button Margin="0,0,8,0" Click="OnShowDialog" Content="Confirmation dialog" Style="{StaticResource Tessel.Button.Accent}" />
                         <Button Margin="0,0,8,0" Click="OnShowDestructiveDialog" Content="Destructive dialog" />
-                        <Button Click="OnShowInputDialog" Content="Dialog with input" />
+                        <Button Margin="0,0,8,0" Click="OnShowInputDialog" Content="Dialog with input" />
+                        <Button Click="OnShowBusyDialog" Content="Dialog with progress" />
                     </WrapPanel>
                     <TextBlock x:Name="DialogResult" Margin="0,12,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="Result: —" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Flyout &amp; TeachingTip" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel>
+                        <Button x:Name="FlyoutButton" Margin="0,0,8,8" Click="OnShowFlyout" Content="Show flyout" />
+                        <Button x:Name="TipButton" Margin="0,0,8,8" Click="OnShowTip" Content="Show teaching tip" Style="{StaticResource Tessel.Button.Accent}" />
+                    </WrapPanel>
+                    <tessel:Flyout x:Name="InfoFlyout" Target="{Binding ElementName=FlyoutButton}">
+                        <StackPanel Width="260">
+                            <TextBlock FontWeight="SemiBold" Text="Delete this item?" />
+                            <TextBlock Margin="0,6,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="A flyout shows light-dismiss content next to its target. Click outside to close it." />
+                            <Button HorizontalAlignment="Right" Click="OnFlyoutConfirm" Content="Yes, delete" Style="{StaticResource Tessel.Button.Danger}" />
+                        </StackPanel>
+                    </tessel:Flyout>
+                    <tessel:TeachingTip x:Name="Tip"
+                                        ActionButtonClick="OnTipAction"
+                                        ActionButtonContent="Got it"
+                                        CloseButtonContent="Remind me later"
+                                        Icon="{tessel:Glyph Lightbulb}"
+                                        Placement="Bottom"
+                                        Subtitle="Use the search box at the top of the pane to jump to any control page."
+                                        Target="{Binding ElementName=TipButton}"
+                                        Title="Find controls faster" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Skeleton" Style="{StaticResource Section}">
+                <StackPanel>
+                    <ToggleButton x:Name="LoadToggle" Margin="0,0,0,16" HorizontalAlignment="Left" Click="OnLoadToggle" Content="Show loaded content" />
+                    <Grid>
+                        <StackPanel x:Name="SkeletonHost" Orientation="Horizontal">
+                            <tessel:Skeleton Width="48" Height="48" Margin="0,0,16,0" VerticalAlignment="Top" IsCircle="True" />
+                            <StackPanel Width="360">
+                                <tessel:Skeleton Width="180" Height="16" Margin="0,2,0,10" HorizontalAlignment="Left" />
+                                <tessel:Skeleton Height="12" Margin="0,0,0,8" />
+                                <tessel:Skeleton Height="12" Margin="0,0,0,8" />
+                                <tessel:Skeleton Width="240" Height="12" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="LoadedHost" Orientation="Horizontal" Visibility="Collapsed">
+                            <tessel:Avatar Width="48" Height="48" Margin="0,0,16,0" VerticalAlignment="Top" DisplayName="Grace Hopper" />
+                            <StackPanel Width="360">
+                                <TextBlock FontWeight="SemiBold" Text="Grace Hopper" />
+                                <TextBlock Margin="0,4,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="Rear Admiral and computer scientist who invented the first compiler. Skeletons are replaced by content as soon as it is available." />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </tessel:Card>
         </StackPanel>

@@ -1,0 +1,50 @@
+<UserControl x:Class="Tessel.Gallery.Pages.DialogsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Dialogs" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Message dialogs and themed file chooser / file saver dialogs. All of them open inside the window and return a result." />
+
+            <tessel:Card Header="MessageDialog" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel>
+                        <Button Margin="0,0,8,8" Click="OnMessage" Content="OK" Tag="Ok" />
+                        <Button Margin="0,0,8,8" Click="OnMessage" Content="OK / Cancel" Tag="OkCancel" />
+                        <Button Margin="0,0,8,8" Click="OnMessage" Content="Yes / No" Tag="YesNo" />
+                        <Button Margin="0,0,8,8" Click="OnMessage" Content="Yes / No / Cancel" Tag="YesNoCancel" />
+                        <Button Margin="0,0,8,8" Click="OnMessage" Content="Retry / Cancel" Tag="RetryCancel" />
+                        <Button Margin="0,0,8,8" Click="OnMessage" Content="Destructive" Style="{StaticResource Tessel.Button.Danger}" Tag="Destructive" />
+                    </WrapPanel>
+                    <TextBlock x:Name="MessageResult" Style="{StaticResource Tessel.Text.Secondary}" Text="Result: —" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="FileChooserDialog" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel>
+                        <Button Margin="0,0,8,8" Click="OnOpenFile" Content="Open a file…" Style="{StaticResource Tessel.Button.Accent}" tessel:ControlHelper.Icon="{tessel:Glyph Folder}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenImages" Content="Open images (multiple)…" />
+                        <Button Margin="0,0,8,8" Click="OnOpenFolder" Content="Choose a folder…" />
+                    </WrapPanel>
+                    <TextBlock x:Name="ChooserResult" Style="{StaticResource Tessel.Text.Secondary}" Text="Selected: —" TextWrapping="Wrap" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="FileSaverDialog" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel>
+                        <Button Margin="0,0,8,8" Click="OnSaveFile" Content="Save as…" Style="{StaticResource Tessel.Button.Accent}" tessel:ControlHelper.Icon="{tessel:Glyph Save}" />
+                        <Button Margin="0,0,8,8" Click="OnSaveImage" Content="Export image…" />
+                    </WrapPanel>
+                    <TextBlock x:Name="SaverResult" Style="{StaticResource Tessel.Text.Secondary}" Text="Save path: — (nothing is written to disk)" TextWrapping="Wrap" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="FileBrowser (standalone control)" Style="{StaticResource Section}">
+                <tessel:FileBrowser Height="340" AllowNewFolder="False" />
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

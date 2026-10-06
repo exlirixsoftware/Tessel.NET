@@ -7,5 +7,14 @@
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Feedback.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Input.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/NavigationView.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Buttons.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Popups.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Pickers.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Tabs.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Wayfinding.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Chips.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Progress.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/ColorRating.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/FileBrowser.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,9 +1,10 @@
 <tessel:TesselWindow x:Class="Tessel.Gallery.MainWindow"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:gallery="clr-namespace:Tessel.Gallery"
                      xmlns:pages="clr-namespace:Tessel.Gallery.Pages"
                      xmlns:tessel="http://schemas.tessel.net/ui"
-                     Title="Tessel Gallery"
+                     Title="Tessel.NET Gallery"
                      Icon="/Resources/logo.png"
                      IconSize="20"
                      Width="1280"
@@ -14,7 +15,7 @@
 
     <tessel:TesselWindow.TitleBarContent>
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
-            <tessel:Badge Margin="0,0,12,0" Content="v1.0" Kind="Accent" />
+            <tessel:Badge Margin="0,0,12,0" Content="{x:Static gallery:AppInfo.Badge}" Kind="Accent" />
             <Button x:Name="ThemeToggle"
                     Height="30"
                     Margin="0,0,8,0"
@@ -41,7 +42,9 @@
             <tessel:NavigationViewItem Content="Text &amp; Input" Icon="{tessel:Glyph Edit}" TargetPageType="{x:Type pages:InputsPage}" />
             <tessel:NavigationViewItem Content="Selection" Icon="{tessel:Glyph CheckboxComposite}" TargetPageType="{x:Type pages:SelectionPage}" />
             <tessel:NavigationViewItem Content="Collections" Icon="{tessel:Glyph List}" TargetPageType="{x:Type pages:CollectionsPage}" />
+            <tessel:NavigationViewItem Content="Navigation" Icon="{tessel:Glyph Forward}" TargetPageType="{x:Type pages:NavigationPage}" />
             <tessel:NavigationViewItem Content="Feedback" Icon="{tessel:Glyph Message}" TargetPageType="{x:Type pages:FeedbackPage}" />
+            <tessel:NavigationViewItem Content="Dialogs" Icon="{tessel:Glyph Comment}" TargetPageType="{x:Type pages:DialogsPage}" />
             <tessel:NavigationViewItem Content="Layout" Icon="{tessel:Glyph ViewAll}" TargetPageType="{x:Type pages:LayoutPage}" />
             <tessel:NavigationViewItem Content="Menus &amp; Tooltips" Icon="{tessel:Glyph More}" TargetPageType="{x:Type pages:MenusPage}" />
             <tessel:NavigationViewItemHeader Content="Design" />

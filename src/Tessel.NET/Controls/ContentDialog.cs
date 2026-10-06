@@ -106,7 +106,78 @@ public class ContentDialog : ContentControl
         set => SetValue(IsPrimaryDestructiveProperty, value);
     }
 
+    /// <summary>
+    /// Shows a progress bar and message below the content and disables the primary and secondary buttons
+    /// (the close button stays enabled so the user can cancel). Use it while a long operation runs.
+    /// </summary>
+    public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register(
+        nameof(IsBusy), typeof(bool), typeof(ContentDialog), new PropertyMetadata(false));
+
+    public bool IsBusy
+    {
+        get => (bool)GetValue(IsBusyProperty);
+        set => SetValue(IsBusyProperty, value);
+    }
+
+    /// <summary>Progress from 0 to 100 while <see cref="IsBusy"/>; ignored while <see cref="IsProgressIndeterminate"/>.</summary>
+    public static readonly DependencyProperty ProgressValueProperty = DependencyProperty.Register(
+        nameof(ProgressValue), typeof(double), typeof(ContentDialog), new PropertyMetadata(0d));
+
+    public double ProgressValue
+    {
+        get => (double)GetValue(ProgressValueProperty);
+        set => SetValue(ProgressValueProperty, value);
+    }
+
+    public static readonly DependencyProperty IsProgressIndeterminateProperty = DependencyProperty.Register(
+        nameof(IsProgressIndeterminate), typeof(bool), typeof(ContentDialog), new PropertyMetadata(true));
+
+    public bool IsProgressIndeterminate
+    {
+        get => (bool)GetValue(IsProgressIndeterminateProperty);
+        set => SetValue(IsProgressIndeterminateProperty, value);
+    }
+
+    /// <summary>Message shown next to the progress bar while <see cref="IsBusy"/>.</summary>
+    public static readonly DependencyProperty ProgressTextProperty = DependencyProperty.Register(
+        nameof(ProgressText), typeof(string), typeof(ContentDialog), new PropertyMetadata(string.Empty));
+
+    public string ProgressText
+    {
+        get => (string)GetValue(ProgressTextProperty);
+        set => SetValue(ProgressTextProperty, value);
+    }
+
+    /// <summary>Maximum width of the dialog (default 548). Raise it for dialogs with wide content.</summary>
+    public static readonly DependencyProperty DialogMaxWidthProperty = DependencyProperty.Register(
+        nameof(DialogMaxWidth), typeof(double), typeof(ContentDialog), new PropertyMetadata(548d));
+
+    public double DialogMaxWidth
+    {
+        get => (double)GetValue(DialogMaxWidthProperty);
+        set => SetValue(DialogMaxWidthProperty, value);
+    }
+
+    /// <summary>Fixed width of the dialog; <see cref="double.NaN"/> (default) sizes it to its content.</summary>
+    public static readonly DependencyProperty DialogWidthProperty = DependencyProperty.Register(
+        nameof(DialogWidth), typeof(double), typeof(ContentDialog), new PropertyMetadata(double.NaN));
+
+    public double DialogWidth
+    {
+        get => (double)GetValue(DialogWidthProperty);
+        set => SetValue(DialogWidthProperty, value);
+    }
+
     #endregion
+
+    /// <summary>Switches to a determinate progress bar showing <paramref name="percent"/> (0-100) and optionally updates the message.</summary>
+    public void ReportProgress(double percent, string? text = null)
+    {
+        IsBusy = true;
+        IsProgressIndeterminate = false;
+        ProgressValue = percent;
+        if (text != null) ProgressText = text;
+    }
 
     public event EventHandler<ContentDialogButtonClickEventArgs>? PrimaryButtonClick;
     public event EventHandler<ContentDialogButtonClickEventArgs>? SecondaryButtonClick;

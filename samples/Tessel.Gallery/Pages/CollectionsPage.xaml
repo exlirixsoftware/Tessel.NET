@@ -88,6 +88,19 @@
                 </tessel:Card>
             </Grid>
 
+            <tessel:Card Header="ListView / GridView" Style="{StaticResource Section}">
+                <ListView Height="240" ItemsSource="{x:Static models:SampleData.Employees}" SelectedIndex="1">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="220" DisplayMemberBinding="{Binding Name}" Header="Name" />
+                            <GridViewColumn Width="200" DisplayMemberBinding="{Binding Role}" Header="Role" />
+                            <GridViewColumn Width="150" DisplayMemberBinding="{Binding Team}" Header="Team" />
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding StartDate, StringFormat=d}" Header="Start date" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </tessel:Card>
+
             <tessel:Card Header="TabControl" Style="{StaticResource Section}">
                 <TabControl Height="140">
                     <TabItem Header="Overview">

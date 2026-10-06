@@ -1,0 +1,270 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:Tessel.NET.Controls"
+                    xmlns:h="clr-namespace:Tessel.NET.Helpers">
+
+    <!--  Chevron half of a SplitButton / ToggleSplitButton  -->
+    <Style x:Key="Tessel.SplitArrowButton" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="Transparent">
+                        <Rectangle x:Name="HoverFill"
+                                   Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"
+                                   Opacity="0"
+                                   RadiusX="4"
+                                   RadiusY="4"
+                                   Margin="2" />
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                                   FontSize="10"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}"
+                                   Text="&#xE70D;" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverFill" Property="Opacity" Value="0.12" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="HoverFill" Property="Opacity" Value="0.22" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  DropDownButton  -->
+    <Style TargetType="{x:Type c:DropDownButton}">
+        <Setter Property="Background" Value="{DynamicResource Tessel.ControlBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Tessel.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="14,6,10,6" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource Tessel.FontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Tessel.FocusVisual}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="h:ControlHelper.CornerRadius" Value="{DynamicResource Tessel.ControlCornerRadius}" />
+        <Setter Property="h:ControlHelper.HoverBackground" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+        <Setter Property="h:ControlHelper.PressedBackground" Value="{DynamicResource Tessel.ControlPressedBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:DropDownButton}">
+                    <Border x:Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding h:ControlHelper.CornerRadius}"
+                            SnapsToDevicePixels="True">
+                        <Grid Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter x:Name="Icon"
+                                              Margin="0,0,8,0"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding h:ControlHelper.Icon}"
+                                              TextElement.FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                                              TextElement.FontSize="{DynamicResource Tessel.IconSize}" />
+                            <ContentPresenter Grid.Column="1" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                            <TextBlock Grid.Column="2"
+                                       Margin="10,1,0,0"
+                                       VerticalAlignment="Center"
+                                       FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                                       FontSize="10"
+                                       Text="&#xE70D;" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="h:ControlHelper.Icon" Value="{x:Null}">
+                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding Path=(h:ControlHelper.HoverBackground), RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding Path=(h:ControlHelper.PressedBackground), RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  SplitButton  -->
+    <Style TargetType="{x:Type c:SplitButton}">
+        <Setter Property="Background" Value="{DynamicResource Tessel.ControlBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Tessel.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="14,6" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource Tessel.FontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Tessel.FocusVisual}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="h:ControlHelper.CornerRadius" Value="{DynamicResource Tessel.ControlCornerRadius}" />
+        <Setter Property="h:ControlHelper.HoverBackground" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+        <Setter Property="h:ControlHelper.PressedBackground" Value="{DynamicResource Tessel.ControlPressedBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:SplitButton}">
+                    <Border x:Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding h:ControlHelper.CornerRadius}"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="Icon"
+                                                  Margin="0,0,8,0"
+                                                  VerticalAlignment="Center"
+                                                  Content="{TemplateBinding h:ControlHelper.Icon}"
+                                                  TextElement.FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                                                  TextElement.FontSize="{DynamicResource Tessel.IconSize}" />
+                                <ContentPresenter Grid.Column="1" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                            </Grid>
+                            <Rectangle Grid.Column="1"
+                                       Width="1"
+                                       Margin="0,6"
+                                       Fill="{TemplateBinding Foreground}"
+                                       Opacity="0.25" />
+                            <Button x:Name="PART_ArrowButton" Grid.Column="2" Style="{StaticResource Tessel.SplitArrowButton}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="h:ControlHelper.Icon" Value="{x:Null}">
+                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding Path=(h:ControlHelper.HoverBackground), RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding Path=(h:ControlHelper.PressedBackground), RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ToggleSplitButton: checked = accent  -->
+    <Style TargetType="{x:Type c:ToggleSplitButton}">
+        <Setter Property="Background" Value="{DynamicResource Tessel.ControlBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Tessel.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="14,6" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FontFamily" Value="{DynamicResource Tessel.FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource Tessel.FontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Tessel.FocusVisual}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="h:ControlHelper.CornerRadius" Value="{DynamicResource Tessel.ControlCornerRadius}" />
+        <Setter Property="h:ControlHelper.HoverBackground" Value="{DynamicResource Tessel.ControlHoverBrush}" />
+        <Setter Property="h:ControlHelper.PressedBackground" Value="{DynamicResource Tessel.ControlPressedBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:ToggleSplitButton}">
+                    <Border x:Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding h:ControlHelper.CornerRadius}"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="Icon"
+                                                  Margin="0,0,8,0"
+                                                  VerticalAlignment="Center"
+                                                  Content="{TemplateBinding h:ControlHelper.Icon}"
+                                                  TextElement.FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                                                  TextElement.FontSize="{DynamicResource Tessel.IconSize}" />
+                                <ContentPresenter Grid.Column="1" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                            </Grid>
+                            <Rectangle Grid.Column="1"
+                                       Width="1"
+                                       Margin="0,6"
+                                       Fill="{TemplateBinding Foreground}"
+                                       Opacity="0.25" />
+                            <Button x:Name="PART_ArrowButton" Grid.Column="2" Style="{StaticResource Tessel.SplitArrowButton}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="h:ControlHelper.Icon" Value="{x:Null}">
+                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding Path=(h:ControlHelper.HoverBackground), RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{Binding Path=(h:ControlHelper.PressedBackground), RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource Tessel.OnAccentBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                <Setter Property="h:ControlHelper.HoverBackground" Value="{DynamicResource Tessel.AccentHoverBrush}" />
+                <Setter Property="h:ControlHelper.PressedBackground" Value="{DynamicResource Tessel.AccentPressedBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -57,6 +57,81 @@
                     </StackPanel>
                 </StackPanel>
             </tessel:Card>
+
+            <tessel:Card Header="Split &amp; drop-down buttons" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel>
+                        <tessel:DropDownButton Margin="0,0,8,8" Content="Options" tessel:ControlHelper.Icon="{tessel:Glyph Settings}">
+                            <tessel:DropDownButton.DropDownMenu>
+                                <ContextMenu>
+                                    <MenuItem Click="OnMenuAction" Header="Rename" Icon="{tessel:Glyph Rename}" />
+                                    <MenuItem Click="OnMenuAction" Header="Duplicate" Icon="{tessel:Glyph Copy}" />
+                                    <Separator />
+                                    <MenuItem Click="OnMenuAction" Header="Delete" Icon="{tessel:Glyph Delete}" />
+                                </ContextMenu>
+                            </tessel:DropDownButton.DropDownMenu>
+                        </tessel:DropDownButton>
+                        <tessel:SplitButton Margin="0,0,8,8"
+                                            Click="OnSplitClick"
+                                            Content="Send"
+                                            tessel:ControlHelper.Icon="{tessel:Glyph Send}">
+                            <tessel:SplitButton.DropDownMenu>
+                                <ContextMenu>
+                                    <MenuItem Click="OnMenuAction" Header="Send later" Icon="{tessel:Glyph Clock}" />
+                                    <MenuItem Click="OnMenuAction" Header="Save as draft" Icon="{tessel:Glyph Save}" />
+                                </ContextMenu>
+                            </tessel:SplitButton.DropDownMenu>
+                        </tessel:SplitButton>
+                        <tessel:SplitButton Margin="0,0,8,8"
+                                            Background="{DynamicResource Tessel.AccentBrush}"
+                                            BorderBrush="{DynamicResource Tessel.AccentBrush}"
+                                            Click="OnSplitClick"
+                                            Content="Publish"
+                                            Foreground="{DynamicResource Tessel.OnAccentBrush}"
+                                            tessel:ControlHelper.HoverBackground="{DynamicResource Tessel.AccentHoverBrush}"
+                                            tessel:ControlHelper.PressedBackground="{DynamicResource Tessel.AccentPressedBrush}">
+                            <tessel:SplitButton.DropDownMenu>
+                                <ContextMenu>
+                                    <MenuItem Click="OnMenuAction" Header="Publish to staging" />
+                                    <MenuItem Click="OnMenuAction" Header="Publish to production" />
+                                </ContextMenu>
+                            </tessel:SplitButton.DropDownMenu>
+                        </tessel:SplitButton>
+                        <tessel:ToggleSplitButton Margin="0,0,8,8"
+                                                  Content="Bold"
+                                                  IsChecked="True"
+                                                  tessel:ControlHelper.Icon="{tessel:Glyph Font}">
+                            <tessel:ToggleSplitButton.DropDownMenu>
+                                <ContextMenu>
+                                    <MenuItem Click="OnMenuAction" Header="Semibold" />
+                                    <MenuItem Click="OnMenuAction" Header="Black" />
+                                </ContextMenu>
+                            </tessel:ToggleSplitButton.DropDownMenu>
+                        </tessel:ToggleSplitButton>
+                        <tessel:SplitButton Margin="0,0,8,8" Content="Disabled" IsEnabled="False" />
+                    </WrapPanel>
+                    <TextBlock x:Name="SplitStatus" Style="{StaticResource Tessel.Text.Secondary}" Text="Last action: —" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Chips" Style="{StaticResource Section}">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.Secondary}" Text="Tags (removable)" />
+                    <WrapPanel x:Name="TagPanel">
+                        <tessel:Chip Margin="0,0,8,8" Content="WPF" IsRemovable="True" Removed="OnChipRemoved" />
+                        <tessel:Chip Margin="0,0,8,8" Content=".NET 10" IsRemovable="True" Removed="OnChipRemoved" Icon="{tessel:Glyph Code}" />
+                        <tessel:Chip Margin="0,0,8,8" Content="Design system" IsRemovable="True" Removed="OnChipRemoved" />
+                        <tessel:Chip Margin="0,0,8,8" Content="Read-only tag" />
+                    </WrapPanel>
+                    <TextBlock Margin="0,8,0,8" Style="{StaticResource Tessel.Text.Secondary}" Text="Filters (selectable)" />
+                    <WrapPanel>
+                        <tessel:Chip Margin="0,0,8,0" Content="All" IsChecked="True" IsSelectable="True" />
+                        <tessel:Chip Margin="0,0,8,0" Content="Unread" IsSelectable="True" Icon="{tessel:Glyph Mail}" />
+                        <tessel:Chip Margin="0,0,8,0" Content="Flagged" IsSelectable="True" Icon="{tessel:Glyph Flag}" />
+                        <tessel:Chip Margin="0,0,8,0" Content="Disabled" IsEnabled="False" IsSelectable="True" />
+                    </WrapPanel>
+                </StackPanel>
+            </tessel:Card>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

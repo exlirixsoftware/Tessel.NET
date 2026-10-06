@@ -64,8 +64,8 @@
                 <tessel:Card Margin="8" IsElevated="True">
                     <StackPanel>
                         <tessel:FontIcon Margin="0,0,0,12" HorizontalAlignment="Left" FontSize="24" Foreground="{DynamicResource Tessel.AccentBrush}" Symbol="ViewAll" />
-                        <TextBlock Style="{StaticResource Tessel.Text.BodyStrong}" Text="40+ styled controls" />
-                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="Every standard WPF control restyled — just merge one dictionary." />
+                        <TextBlock Style="{StaticResource Tessel.Text.BodyStrong}" Text="70+ controls and components" />
+                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="Every standard WPF control restyled plus 30+ new ones — just merge one dictionary." />
                     </StackPanel>
                 </tessel:Card>
                 <tessel:Card Margin="8" IsElevated="True">
@@ -76,6 +76,33 @@
                     </StackPanel>
                 </tessel:Card>
             </UniformGrid>
+
+            <!--  What's new  -->
+            <tessel:Card Margin="0,16,0,0" Header="What's new in 1.1">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="15 new controls, file dialogs with search and thumbnails, and styles for the remaining everyday WPF controls." />
+                    <WrapPanel>
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Dialogs" Tag="Dialogs" tessel:ControlHelper.Icon="{tessel:Glyph Comment}" Style="{StaticResource Tessel.Button.Accent}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Navigation" Tag="Navigation" tessel:ControlHelper.Icon="{tessel:Glyph Forward}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Text &amp; Input" Tag="Inputs" tessel:ControlHelper.Icon="{tessel:Glyph Edit}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Buttons" Tag="Buttons" tessel:ControlHelper.Icon="{tessel:Glyph TouchPointer}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Feedback" Tag="Feedback" tessel:ControlHelper.Icon="{tessel:Glyph Message}" />
+                    </WrapPanel>
+                    <WrapPanel>
+                        <tessel:Badge Margin="0,0,6,6" Content="TabView" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="AutoSuggestBox" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="ColorPicker" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="TimePicker" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="SplitButton" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="Stepper" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="Pagination" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="TeachingTip" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="FileChooserDialog" Kind="Success" />
+                        <tessel:Badge Margin="0,0,6,6" Content="FileSaverDialog" Kind="Success" />
+                        <tessel:Badge Margin="0,0,6,6" Content="MessageDialog" Kind="Success" />
+                    </WrapPanel>
+                </StackPanel>
+            </tessel:Card>
 
             <!--  Getting started  -->
             <tessel:Card Margin="0,16,0,0" Header="Getting started">

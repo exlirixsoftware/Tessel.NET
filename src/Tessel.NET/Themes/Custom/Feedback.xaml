@@ -159,7 +159,8 @@
                     <Grid Background="{DynamicResource Tessel.OverlayBrush}">
                         <Border x:Name="PART_Dialog"
                                 MinWidth="320"
-                                MaxWidth="548"
+                                MaxWidth="{TemplateBinding DialogMaxWidth}"
+                                Width="{TemplateBinding DialogWidth}"
                                 Margin="24"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -186,6 +187,16 @@
                                             </Style>
                                         </ContentPresenter.Resources>
                                     </ContentPresenter>
+                                    <StackPanel x:Name="BusyPanel" Margin="0,20,0,0" Visibility="Collapsed">
+                                        <TextBlock x:Name="ProgressText"
+                                                   Margin="0,0,0,8"
+                                                   Foreground="{DynamicResource Tessel.TextSecondaryBrush}"
+                                                   Text="{TemplateBinding ProgressText}"
+                                                   TextWrapping="Wrap" />
+                                        <ProgressBar IsIndeterminate="{TemplateBinding IsProgressIndeterminate}"
+                                                     Maximum="100"
+                                                     Value="{TemplateBinding ProgressValue}" />
+                                    </StackPanel>
                                 </StackPanel>
                                 <Border Grid.Row="1"
                                         Padding="20,16"
@@ -216,6 +227,14 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="Title" Value="{x:Null}">
                             <Setter TargetName="Title" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsBusy" Value="True">
+                            <Setter TargetName="BusyPanel" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_PrimaryButton" Property="IsEnabled" Value="False" />
+                            <Setter TargetName="PART_SecondaryButton" Property="IsEnabled" Value="False" />
+                        </Trigger>
+                        <Trigger Property="ProgressText" Value="">
+                            <Setter TargetName="ProgressText" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="IsPrimaryDestructive" Value="True">
                             <Setter TargetName="PART_PrimaryButton" Property="Style" Value="{DynamicResource Tessel.Button.Danger}" />

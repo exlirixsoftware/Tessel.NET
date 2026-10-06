@@ -16,6 +16,8 @@
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Controls/DataGrid.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Controls/TreeView.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Controls/DatePicker.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Controls/ListView.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Controls/ToolBar.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Controls/Misc.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

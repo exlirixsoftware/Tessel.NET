@@ -5,6 +5,7 @@
     <RootNamespace>Tessel.Gallery</RootNamespace>
     <AssemblyName>Tessel.Gallery</AssemblyName>
     <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

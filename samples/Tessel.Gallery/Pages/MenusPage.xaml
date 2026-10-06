@@ -43,6 +43,38 @@
                 </Menu>
             </tessel:Card>
 
+            <tessel:Card Header="ToolBar" Style="{StaticResource Section}">
+                <ToolBarTray>
+                    <ToolBar>
+                        <Button Content="{tessel:Glyph Add}" FontFamily="{DynamicResource Tessel.IconFontFamily}" ToolTip="New" />
+                        <Button Content="{tessel:Glyph Folder}" FontFamily="{DynamicResource Tessel.IconFontFamily}" ToolTip="Open" />
+                        <Button Content="{tessel:Glyph Save}" FontFamily="{DynamicResource Tessel.IconFontFamily}" ToolTip="Save" />
+                        <Separator />
+                        <ToggleButton Content="{tessel:Glyph Font}" FontFamily="{DynamicResource Tessel.IconFontFamily}" IsChecked="True" ToolTip="Bold" />
+                        <ToggleButton Content="{tessel:Glyph Code}" FontFamily="{DynamicResource Tessel.IconFontFamily}" ToolTip="Code" />
+                        <Separator />
+                        <ComboBox Width="130" SelectedIndex="0">
+                            <ComboBoxItem Content="Segoe UI" />
+                            <ComboBoxItem Content="Cascadia Mono" />
+                        </ComboBox>
+                        <Button Content="Overflow item 1" />
+                        <Button Content="Overflow item 2" />
+                    </ToolBar>
+                    <ToolBar>
+                        <Button Content="{tessel:Glyph Undo}" FontFamily="{DynamicResource Tessel.IconFontFamily}" ToolTip="Undo" />
+                        <Button Content="{tessel:Glyph Redo}" FontFamily="{DynamicResource Tessel.IconFontFamily}" ToolTip="Redo" />
+                    </ToolBar>
+                </ToolBarTray>
+            </tessel:Card>
+
+            <tessel:Card Header="Frame" Style="{StaticResource Section}">
+                <Frame Height="70">
+                    <Frame.Content>
+                        <TextBlock VerticalAlignment="Center" Style="{StaticResource Tessel.Text.Secondary}" Text="A Frame hosts a page or any content without the default navigation chrome." />
+                    </Frame.Content>
+                </Frame>
+            </tessel:Card>
+
             <tessel:Card Header="Context menu" Style="{StaticResource Section}">
                 <Border Height="120"
                         Background="{DynamicResource Tessel.SubtleBrush}"

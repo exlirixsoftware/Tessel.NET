@@ -1,0 +1,88 @@
+<UserControl x:Class="Tessel.Gallery.Pages.NavigationPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Navigation" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Breadcrumbs, document tabs, pagination, steppers and segmented controls." />
+
+            <tessel:Card Header="BreadcrumbBar" Style="{StaticResource Section}">
+                <StackPanel>
+                    <tessel:BreadcrumbBar x:Name="Breadcrumbs" ItemClicked="OnCrumbClicked" />
+                    <TextBlock x:Name="CrumbStatus" Margin="8,12,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="Click a crumb to navigate up." />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="TabView" Style="{StaticResource Section}">
+                <tessel:TabView x:Name="Documents"
+                                Height="220"
+                                AddTabButtonClick="OnAddTab"
+                                Padding="0,16,0,0"
+                                TabCloseRequested="OnTabCloseRequested">
+                    <tessel:TabView.TabStripFooter>
+                        <TextBlock Style="{StaticResource Tessel.Text.Caption}" Text="Drag tabs to reorder" />
+                    </tessel:TabView.TabStripFooter>
+                    <tessel:TabViewItem Header="Home.xaml" Icon="{tessel:Glyph Home}" IsClosable="False">
+                        <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="This tab can't be closed (IsClosable=False)." />
+                    </tessel:TabViewItem>
+                    <tessel:TabViewItem Header="Report.docx" Icon="{tessel:Glyph Document}">
+                        <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="Tabs can be dragged, closed (also with the middle mouse button) and added." />
+                    </tessel:TabViewItem>
+                    <tessel:TabViewItem Header="A tab with a rather long title that gets trimmed" Icon="{tessel:Glyph Page}">
+                        <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="Long headers are trimmed with an ellipsis." />
+                    </tessel:TabViewItem>
+                </tessel:TabView>
+            </tessel:Card>
+
+            <tessel:Card Header="Pagination" Style="{StaticResource Section}">
+                <StackPanel>
+                    <tessel:Pagination x:Name="Pager" CurrentPage="1" PageCount="24" />
+                    <TextBlock Margin="0,12,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="{Binding CurrentPage, ElementName=Pager, StringFormat='Page {0} of 24'}" />
+                    <TextBlock Margin="0,16,0,8" Text="Few pages" />
+                    <tessel:Pagination CurrentPage="2" PageCount="5" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="SegmentedControl" Style="{StaticResource Section}">
+                <StackPanel>
+                    <tessel:SegmentedControl x:Name="ViewMode" SelectedIndex="1">
+                        <tessel:SegmentedItem Content="Day" />
+                        <tessel:SegmentedItem Content="Week" />
+                        <tessel:SegmentedItem Content="Month" />
+                        <tessel:SegmentedItem Content="Year" />
+                    </tessel:SegmentedControl>
+                    <TextBlock Margin="0,16,0,8" Text="With icons" />
+                    <tessel:SegmentedControl SelectedIndex="0">
+                        <tessel:SegmentedItem Content="List" Icon="{tessel:Glyph List}" />
+                        <tessel:SegmentedItem Content="Grid" Icon="{tessel:Glyph ViewAll}" />
+                        <tessel:SegmentedItem Content="Pictures" Icon="{tessel:Glyph Pictures}" />
+                    </tessel:SegmentedControl>
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Stepper" Style="{StaticResource Section}">
+                <StackPanel>
+                    <tessel:Stepper x:Name="Steps" CurrentStep="1">
+                        <tessel:StepperItem Description="Review your items" Header="Cart" />
+                        <tessel:StepperItem Description="Where should we send it?" Header="Shipping" />
+                        <tessel:StepperItem Description="Pay securely" Header="Payment" />
+                        <tessel:StepperItem Description="You're done" Header="Confirmation" />
+                    </tessel:Stepper>
+                    <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
+                        <Button Margin="0,0,8,0" Click="OnStepBack" Content="Back" />
+                        <Button Click="OnStepNext" Content="Next" Style="{StaticResource Tessel.Button.Accent}" />
+                        <TextBlock Margin="16,0,0,0" VerticalAlignment="Center" Style="{StaticResource Tessel.Text.Secondary}" Text="{Binding CurrentStep, ElementName=Steps, StringFormat='Current step: {0}'}" />
+                    </StackPanel>
+                    <TextBlock Margin="0,24,0,12" Text="Vertical (timeline) with an error" />
+                    <tessel:Stepper CurrentStep="2" Orientation="Vertical">
+                        <tessel:StepperItem Description="10:02" Header="Order placed" />
+                        <tessel:StepperItem Description="10:40" Header="Packed" />
+                        <tessel:StepperItem Description="Carrier could not collect the parcel" Header="Shipped" IsError="True" />
+                        <tessel:StepperItem Description="Pending" Header="Delivered" />
+                    </tessel:Stepper>
+                </StackPanel>
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
