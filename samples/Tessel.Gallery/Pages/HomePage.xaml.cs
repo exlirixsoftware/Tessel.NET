@@ -23,6 +23,7 @@ public partial class HomePage : UserControl
             "Inputs" => typeof(InputsPage),
             "Buttons" => typeof(ButtonsPage),
             "Feedback" => typeof(FeedbackPage),
+            "Animation" => typeof(AnimationPage),
             _ => null,
         };
         if (page != null) Navigation?.Navigate(page);

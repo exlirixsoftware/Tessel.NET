@@ -9,6 +9,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _Nothing yet._
 
+## [1.2.0] - 2026-10-28
+
+Adds the `Timeline` control and the `AnimationTimeline` editing control. This release is backward compatible: applications that merge `ThemeResources` need no changes.
+
+### Added
+
+#### New custom controls
+
+| Control | Description |
+| --- | --- |
+| `Timeline` / `TimelineItem` | Chronological list of events (an activity feed, order tracking, a project history). Each entry has a marker on a connecting line, a `Header`, a description (the content), an optional `Timestamp` (any text, a date with `TimestampStringFormat`, or an element) and an optional `Icon` shown inside the marker (a dot when there is none). `Kind` colors the marker (`BadgeKind`: `Accent` by default, `Neutral`, `Success`, `Warning`, `Danger`, `Info`); `MarkerBrush` overrides it. `IsPending` shows an entry that has not happened yet as a hollow, dashed, faded marker. `Orientation` is `Vertical` (default) or `Horizontal`; `Layout` is `Standard` (all entries on one side, timestamps on the other) or `Alternate` (entries alternate between the two sides of the line). Horizontal timelines give each entry `ItemWidth` (default 200, `NaN` sizes to content), scroll sideways and respond to the mouse wheel. Timestamp columns are shared so the markers of a vertical timeline always line up. Works with `Items` and with `ItemsSource` (the data item is the content; bind `Header`, `Timestamp`, `Kind`, `Icon` with an `ItemContainerStyle`). Read-only `Side`, `Index`, `IsFirst` and `IsLast` are provided for custom templates. |
+| `AnimationTimeline` | An editing timeline for video, audio and animation tools (a video editor, a pixel/sprite editor, a motion-graphics tool). Positions are whole frames, so one control covers both worlds: clips of many frames on a timecode ruler, or layers with one-frame cels and keyframe diamonds on a frame-number ruler. **Model:** `Tracks` of `AnimationTrack` (`Name`, `Brush`, `Height`, `IsVisible`, `IsLocked`, `Clips`) holding `AnimationClip`s (`Name`, `Start`, `Length`, `Brush`, `Thumbnail`, `IsKeyframe`, `IsSelected`, `Tag`, `Waveform`, `MediaStart`, `MediaLength`), plus `Markers` (`AnimationMarker`). All model classes raise `PropertyChanged`/`CollectionChanged` and the timeline redraws. **Time:** `FramesPerSecond` (default 24), `Duration` (frames), `CurrentFrame` (the playhead, two-way and clamped), `TimeDisplay` (`Timecode`, `Frames` or `Seconds`) and `FormatTime`. **Playback:** `Play`, `Pause`, `Stop`, `TogglePlayback`, `StepForward`/`StepBackward`, `PlaybackRate`, a loop region (`LoopStart`, `LoopEnd`, `IsLoopEnabled`; Shift-drag the ruler) and `FollowPlayhead`. **Editing with the mouse:** click or drag the ruler to scrub, click a marker to jump to it, click/Ctrl-click clips to select, drag a box on empty space to select every clip it touches (Ctrl/Shift keeps the current selection; clips of locked tracks are skipped), drag clips (also onto other tracks, several at once) and trim their edges, double-click a clip, Delete removes the selection. Dragged clips snap to the playhead, markers, the loop region and other clips' edges (`IsSnappingEnabled`); Escape cancels a drag; locked tracks cannot be edited and `IsEditable="False"` makes the timeline read-only. **Editing rules:** `PreventOverlap` stops clips at their neighbors (a dragged clip cannot jump over another clip, a trimmed edge stops at the next clip, a clip cannot be dropped on an occupied part of another track), `ConstrainToDuration` keeps clips inside `0..Duration`, and `AutoExtendDuration` grows `Duration` instead when a clip is moved, trimmed or added past the end. `AddClip(track, clip)` adds a clip under the same rules and returns `false` when there is no room. **Undo and redo:** every move, trim, delete and `AddClip` is recorded (`IsUndoEnabled`, `HistoryLimit` = 200); `Undo`, `Redo`, `ClearHistory`, `CanUndo`/`CanRedo`, `UndoDescription`/`RedoDescription` and `HistoryChanged` drive your own Edit menu, and Undo also restores an automatically extended `Duration`. `RecordHistory(description, undo, redo)` puts your own steps (a colour change, a split) on the same stack; replacing `Tracks` starts a new history. The transport bar has Undo and Redo buttons. **Waveforms:** `AnimationClip.Waveform` draws peak bars inside audio clips; `AnimationWaveform.FromSamples` and `FromPcm16` reduce raw audio to peaks. With `MediaLength` (the length of the source media in frames) and `MediaStart` (where in the media the clip begins) trimming scrolls the waveform instead of stretching it, a left trim advances `MediaStart`, and a clip cannot be trimmed beyond the start or the end of its media. **View:** `PixelsPerFrame` zoom (Ctrl + mouse wheel, `ZoomIn`/`ZoomOut`/`ZoomToFit`), horizontal and vertical scrolling that keeps the track names aligned, an adaptive ruler (seconds or frames depending on the zoom), `ShowTransport` (play, step, loop, snap and zoom buttons with a time display), `HeaderWidth`, `HeaderCorner` and a replaceable `TrackHeaderTemplate` (color bar, name, eye and lock toggles by default). **Events:** `CurrentFrameChanged`, `PlaybackStateChanged`, `SelectionChanged`, `ClipsMoved`, `ClipsResized` (both report old position/length/track), `ClipsDeleting` (cancelable), `ClipActivated` and `HistoryChanged`. Keyboard: Space, Left/Right (Ctrl = 10 frames), Home/End, Delete, Ctrl+A, Ctrl +/-, Ctrl+Z, Ctrl+Y / Ctrl+Shift+Z. |
+
+#### Gallery
+
+- The Navigation page has a **Timeline** card with a switch between the vertical, alternate, horizontal and horizontal alternate layouts, and a second one that builds a timeline from data with an "Add event" button.
+- New **Animation** page with a video-editor example (five tracks, markers, a preview with the active clips, add/delete clip and marker buttons, waveforms on the audio tracks (one of them a trimmable part of a longer recording), switches for overlap prevention, keeping clips inside the project and growing the project automatically, a time-format switch and a live "last action" line) and a pixel-editor example (layers, one-frame cels, keyframe diamonds and a bouncing ball driven by the playhead).
+- The Home page has a "What's new in 1.2" card.
+
+### Changed
+
+- The assembly and package version is now `1.2.0` (`Directory.Build.props`).
+- The `Stepper` is still the control for progress through steps; for a plain list of past events use the new `Timeline` (the vertical `Stepper` remains available).
+
+### Fixed
+
+- No bug fixes to features of 1.1.0 in this release.
+
 ## [1.1.0] - 2026-10-04
 
 Adds 15 new controls, styles for the remaining everyday WPF controls, and two upgrades to existing controls. This release is backward compatible: applications that merge `ThemeResources` need no changes.
@@ -221,6 +249,7 @@ Button style variants: `Tessel.Button.Accent`, `Tessel.Button.Outline`, `Tessel.
 
 - Windows only. The library depends on WPF and the Segoe Fluent Icons / Segoe MDL2 Assets fonts. On Windows 10, glyphs fall back to Segoe MDL2 Assets.
 
-[Unreleased]: https://github.com/exlirixsoftware/Tessel.NET/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/exlirixsoftware/Tessel.NET/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/exlirixsoftware/Tessel.NET/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/exlirixsoftware/Tessel.NET/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/exlirixsoftware/Tessel.NET/releases/tag/v1.0.0

@@ -22,6 +22,36 @@ public partial class NavigationPage : UserControl
         CrumbStatus.Text = $"Navigated to “{e.Item}”.";
     }
 
+    private void OnTimelineLayoutChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (DemoTimeline == null || sender is not SegmentedControl { SelectedIndex: >= 0 } switcher) return;
+        DemoTimeline.Orientation = switcher.SelectedIndex >= 2 ? Orientation.Horizontal : Orientation.Vertical;
+        DemoTimeline.Layout = switcher.SelectedIndex is 1 or 3 ? TimelineLayout.Alternate : TimelineLayout.Standard;
+    }
+
+    private static readonly (string Title, string Text, BadgeKind Kind, string Glyph)[] NewEvents =
+    [
+        ("Release tagged", "v1.2.0 was tagged on main.", BadgeKind.Success, "\uE8EC"),
+        ("Package published", "Tessel.NET 1.2.0 is available on NuGet.", BadgeKind.Accent, "\uE896"),
+        ("Issue reported", "A user asked for a horizontal layout.", BadgeKind.Danger, "\uE7BA"),
+        ("Docs updated", "The README now covers the timeline.", BadgeKind.Info, "\uE8A5"),
+    ];
+
+    private int _newEventIndex;
+
+    private void OnAddActivity(object sender, RoutedEventArgs e)
+    {
+        var next = NewEvents[_newEventIndex++ % NewEvents.Length];
+        Models.SampleData.Activity.Add(new Models.ActivityEvent
+        {
+            Title = next.Title,
+            Description = next.Text,
+            Kind = next.Kind,
+            Glyph = next.Glyph,
+            Time = System.DateTime.Now,
+        });
+    }
+
     private void OnStepBack(object sender, RoutedEventArgs e) => Steps.CurrentStep--;
 
     private void OnStepNext(object sender, RoutedEventArgs e) => Steps.CurrentStep++;

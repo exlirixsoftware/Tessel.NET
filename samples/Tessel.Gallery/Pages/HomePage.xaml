@@ -78,17 +78,24 @@
             </UniformGrid>
 
             <!--  What's new  -->
-            <tessel:Card Margin="0,16,0,0" Header="What's new in 1.1">
+            <tessel:Card Margin="0,16,0,0" Header="What's new in 1.2">
                 <StackPanel>
-                    <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="15 new controls, file dialogs with search and thumbnails, and styles for the remaining everyday WPF controls." />
+                    <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="The new Timeline control shows events in chronological order, and the new AnimationTimeline is an editing timeline for video and pixel editors: tracks, clips, keyframes, markers, scrubbing, snapping, zoom and playback." />
                     <WrapPanel>
-                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Dialogs" Tag="Dialogs" tessel:ControlHelper.Icon="{tessel:Glyph Comment}" Style="{StaticResource Tessel.Button.Accent}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Animation timeline" Tag="Animation" tessel:ControlHelper.Icon="{tessel:Glyph Video}" Style="{StaticResource Tessel.Button.Accent}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Timeline" Tag="Navigation" tessel:ControlHelper.Icon="{tessel:Glyph Clock}" />
+                    </WrapPanel>
+                    <TextBlock Margin="0,8,0,8" Style="{StaticResource Tessel.Text.Caption}" Text="Introduced in 1.1: 15 new controls, file dialogs with search and thumbnails, and styles for the remaining everyday WPF controls." />
+                    <WrapPanel>
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Dialogs" Tag="Dialogs" tessel:ControlHelper.Icon="{tessel:Glyph Comment}" />
                         <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Navigation" Tag="Navigation" tessel:ControlHelper.Icon="{tessel:Glyph Forward}" />
                         <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Text &amp; Input" Tag="Inputs" tessel:ControlHelper.Icon="{tessel:Glyph Edit}" />
                         <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Buttons" Tag="Buttons" tessel:ControlHelper.Icon="{tessel:Glyph TouchPointer}" />
                         <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Feedback" Tag="Feedback" tessel:ControlHelper.Icon="{tessel:Glyph Message}" />
                     </WrapPanel>
                     <WrapPanel>
+                        <tessel:Badge Margin="0,0,6,6" Content="AnimationTimeline" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="Timeline" IsSolid="True" Kind="Accent" />
                         <tessel:Badge Margin="0,0,6,6" Content="TabView" Kind="Accent" />
                         <tessel:Badge Margin="0,0,6,6" Content="AutoSuggestBox" Kind="Accent" />
                         <tessel:Badge Margin="0,0,6,6" Content="ColorPicker" Kind="Accent" />

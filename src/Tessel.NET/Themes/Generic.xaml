@@ -16,5 +16,7 @@
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Progress.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/ColorRating.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/FileBrowser.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Timeline.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/AnimationTimeline.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

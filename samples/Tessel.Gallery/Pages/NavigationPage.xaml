@@ -1,11 +1,12 @@
 <UserControl x:Class="Tessel.Gallery.Pages.NavigationPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:Tessel.Gallery.Models"
              xmlns:tessel="http://schemas.tessel.net/ui">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Style="{StaticResource PageHost}">
             <TextBlock Style="{StaticResource PageTitle}" Text="Navigation" />
-            <TextBlock Style="{StaticResource PageDescription}" Text="Breadcrumbs, document tabs, pagination, steppers and segmented controls." />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Breadcrumbs, document tabs, pagination, steppers, timelines and segmented controls." />
 
             <tessel:Card Header="BreadcrumbBar" Style="{StaticResource Section}">
                 <StackPanel>
@@ -81,6 +82,71 @@
                         <tessel:StepperItem Description="Carrier could not collect the parcel" Header="Shipped" IsError="True" />
                         <tessel:StepperItem Description="Pending" Header="Delivered" />
                     </tessel:Stepper>
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Timeline" Style="{StaticResource Section}">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="A chronological list of events. Switch the layout:" />
+                    <tessel:SegmentedControl Margin="0,0,0,20" SelectedIndex="0" SelectionChanged="OnTimelineLayoutChanged">
+                        <tessel:SegmentedItem Content="Vertical" />
+                        <tessel:SegmentedItem Content="Alternate" />
+                        <tessel:SegmentedItem Content="Horizontal" />
+                        <tessel:SegmentedItem Content="Horizontal alternate" />
+                    </tessel:SegmentedControl>
+                    <tessel:Timeline x:Name="DemoTimeline">
+                        <tessel:TimelineItem Header="Project created"
+                                             Icon="{tessel:Glyph Add}"
+                                             Timestamp="Mon 09:00">
+                            Ada created the repository and invited the team.
+                        </tessel:TimelineItem>
+                        <tessel:TimelineItem Header="Build passed"
+                                             Icon="{tessel:Glyph Accept}"
+                                             Kind="Success"
+                                             Timestamp="Mon 09:42">
+                            All checks passed on the first run.
+                        </tessel:TimelineItem>
+                        <tessel:TimelineItem Header="Review requested"
+                                             Icon="{tessel:Glyph Comment}"
+                                             Kind="Info"
+                                             Timestamp="Tue 14:10">
+                            Grace was asked to review the changes.
+                        </tessel:TimelineItem>
+                        <tessel:TimelineItem Header="Deployment delayed"
+                                             Icon="{tessel:Glyph Warning}"
+                                             Kind="Warning"
+                                             Timestamp="Wed 16:30">
+                            The staging environment was unavailable.
+                        </tessel:TimelineItem>
+                        <tessel:TimelineItem Header="Release"
+                                             Icon="{tessel:Glyph Flag}"
+                                             IsPending="True"
+                                             Timestamp="Friday">
+                            Planned for the end of the week.
+                        </tessel:TimelineItem>
+                    </tessel:Timeline>
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Timeline from data (activity feed)" Style="{StaticResource Section}">
+                <StackPanel>
+                    <Button Margin="0,0,0,16" HorizontalAlignment="Left" Click="OnAddActivity" Content="Add event" tessel:ControlHelper.Icon="{tessel:Glyph Add}" />
+                    <tessel:Timeline ItemsSource="{x:Static models:SampleData.Activity}">
+                        <tessel:Timeline.ItemContainerStyle>
+                            <Style TargetType="tessel:TimelineItem">
+                                <Setter Property="Header" Value="{Binding Title}" />
+                                <Setter Property="Timestamp" Value="{Binding Time}" />
+                                <Setter Property="TimestampStringFormat" Value="d MMM, HH:mm" />
+                                <Setter Property="Kind" Value="{Binding Kind}" />
+                                <Setter Property="Icon" Value="{Binding Glyph}" />
+                            </Style>
+                        </tessel:Timeline.ItemContainerStyle>
+                        <tessel:Timeline.ItemTemplate>
+                            <DataTemplate DataType="models:ActivityEvent">
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </tessel:Timeline.ItemTemplate>
+                    </tessel:Timeline>
                 </StackPanel>
             </tessel:Card>
         </StackPanel>

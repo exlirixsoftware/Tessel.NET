@@ -1,0 +1,133 @@
+<UserControl x:Class="Tessel.Gallery.Pages.AnimationPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Animation timeline" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="An editing timeline for video, audio and animation tools: tracks, clips, keyframes, markers, a loop region, zoom, snapping and playback." />
+
+            <tessel:Card Header="Video editor" Style="{StaticResource Section}">
+                <StackPanel>
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Height="168"
+                                Background="#FF0B0D12"
+                                CornerRadius="{DynamicResource Tessel.ControlCornerRadius}">
+                            <Grid>
+                                <TextBlock x:Name="VideoPreviewTime"
+                                           Margin="0,0,0,18"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{DynamicResource Tessel.MonoFontFamily}"
+                                           FontSize="34"
+                                           Foreground="White"
+                                           Text="00:00:00" />
+                                <TextBlock x:Name="VideoPreviewClips"
+                                           Margin="12,0,12,10"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Bottom"
+                                           FontSize="12"
+                                           Foreground="#B3FFFFFF"
+                                           TextAlignment="Center"
+                                           TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.BodyStrong}" Text="Try it" />
+                            <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• Click or drag the ruler to scrub; Space plays and pauses." />
+                            <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• Drag clips (also to another track) and trim their edges. They snap to each other, markers and the playhead." />
+                            <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• Drag a box on empty space to select several clips. Shift-drag the ruler to set a loop region. Ctrl + mouse wheel zooms." />
+                            <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• Delete removes the selected clips; Ctrl+Z / Ctrl+Y undo and redo every edit." />
+                            <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="• The audio clips show waveforms; “Voice-over” is a trimmed part of a longer recording, so you can reveal more of it by trimming its edges." />
+                            <WrapPanel>
+                                <Button Margin="0,0,8,8" Click="OnAddClip" Content="Add clip at playhead" tessel:ControlHelper.Icon="{tessel:Glyph Add}" />
+                                <Button Margin="0,0,8,8" Click="OnAddMarker" Content="Add marker" tessel:ControlHelper.Icon="{tessel:Glyph Flag}" />
+                                <Button Margin="0,0,8,8" Click="OnDeleteClips" Content="Delete selected" tessel:ControlHelper.Icon="{tessel:Glyph Delete}" />
+                                <Button Margin="0,0,8,8" Click="OnFitDuration" Content="Fit duration" />
+                            </WrapPanel>
+                            <WrapPanel Margin="0,0,0,8">
+                                <tessel:ToggleSwitch Margin="0,0,20,8" Content="Prevent overlap" IsChecked="{Binding PreventOverlap, ElementName=VideoTimeline, Mode=TwoWay}" />
+                                <tessel:ToggleSwitch Margin="0,0,20,8" Content="Keep inside project length" IsChecked="{Binding ConstrainToDuration, ElementName=VideoTimeline, Mode=TwoWay}" />
+                                <tessel:ToggleSwitch Margin="0,0,0,8" Content="Grow project automatically" IsChecked="{Binding AutoExtendDuration, ElementName=VideoTimeline, Mode=TwoWay}" />
+                            </WrapPanel>
+                            <tessel:SegmentedControl SelectedIndex="0" SelectionChanged="OnTimeDisplayChanged">
+                                <tessel:SegmentedItem Content="Timecode" />
+                                <tessel:SegmentedItem Content="Frames" />
+                                <tessel:SegmentedItem Content="Seconds" />
+                            </tessel:SegmentedControl>
+                        </StackPanel>
+                    </Grid>
+                    <tessel:AnimationTimeline x:Name="VideoTimeline"
+                                              Height="330"
+                                              CurrentFrameChanged="OnVideoFrameChanged"
+                                              ClipsMoved="OnVideoClipsMoved"
+                                              ClipsResized="OnVideoClipsResized"
+                                              ClipActivated="OnVideoClipActivated"
+                                              Duration="480"
+                                              FramesPerSecond="24"
+                                              PixelsPerFrame="1.6">
+                        <tessel:AnimationTimeline.HeaderCorner>
+                            <TextBlock FontWeight="SemiBold" Text="Tracks" />
+                        </tessel:AnimationTimeline.HeaderCorner>
+                    </tessel:AnimationTimeline>
+                    <TextBlock x:Name="VideoStatus" Margin="2,10,0,0" Style="{StaticResource Tessel.Text.Caption}" Text="Last action: —" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Pixel / frame-by-frame editor" Style="{StaticResource Section}">
+                <StackPanel>
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Height="168"
+                                Background="{DynamicResource Tessel.SubtleBrush}"
+                                ClipToBounds="True"
+                                CornerRadius="{DynamicResource Tessel.ControlCornerRadius}">
+                            <Canvas x:Name="PixelStage" Width="300" Height="168">
+                                <Border x:Name="PixelGround"
+                                        Canvas.Left="0"
+                                        Canvas.Top="142"
+                                        Width="300"
+                                        Height="26"
+                                        Background="{DynamicResource Tessel.BorderStrongBrush}" />
+                                <Ellipse x:Name="PixelShadow"
+                                         Canvas.Top="140"
+                                         Width="40"
+                                         Height="8"
+                                         Fill="#55000000" />
+                                <Ellipse x:Name="PixelBall"
+                                         Width="30"
+                                         Height="30"
+                                         Fill="{DynamicResource Tessel.AccentBrush}" />
+                            </Canvas>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.BodyStrong}" Text="Layers and cels" />
+                            <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• The same control with frame numbers, one-frame cels and keyframe diamonds." />
+                            <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="• The ball follows the playhead; its color comes from the cel of the “Ball” layer at the current frame." />
+                            <TextBlock x:Name="PixelInfo" Style="{StaticResource Tessel.Text.Caption}" Text="Frame 0 of 24" />
+                        </StackPanel>
+                    </Grid>
+                    <tessel:AnimationTimeline x:Name="PixelTimeline"
+                                              Height="250"
+                                              CurrentFrameChanged="OnPixelFrameChanged"
+                                              Duration="24"
+                                              FramesPerSecond="12"
+                                              IsLoopEnabled="True"
+                                              PixelsPerFrame="34"
+                                              TimeDisplay="Frames">
+                        <tessel:AnimationTimeline.HeaderCorner>
+                            <TextBlock FontWeight="SemiBold" Text="Layers" />
+                        </tessel:AnimationTimeline.HeaderCorner>
+                    </tessel:AnimationTimeline>
+                </StackPanel>
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
