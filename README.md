@@ -1,3 +1,4 @@
+![logo](res/dotnet.png)
 # Tessel.NET
 
 A modern, themeable UI framework for **WPF on .NET 10**.
