@@ -45,6 +45,7 @@
             <tessel:NavigationViewItem Content="Navigation" Icon="{tessel:Glyph Forward}" TargetPageType="{x:Type pages:NavigationPage}" />
             <tessel:NavigationViewItem Content="Feedback" Icon="{tessel:Glyph Message}" TargetPageType="{x:Type pages:FeedbackPage}" />
             <tessel:NavigationViewItem Content="Dialogs" Icon="{tessel:Glyph Comment}" TargetPageType="{x:Type pages:DialogsPage}" />
+            <tessel:NavigationViewItem Content="Animation" Icon="{tessel:Glyph Video}" TargetPageType="{x:Type pages:AnimationPage}" />
             <tessel:NavigationViewItem Content="Layout" Icon="{tessel:Glyph ViewAll}" TargetPageType="{x:Type pages:LayoutPage}" />
             <tessel:NavigationViewItem Content="Menus &amp; Tooltips" Icon="{tessel:Glyph More}" TargetPageType="{x:Type pages:MenusPage}" />
             <tessel:NavigationViewItemHeader Content="Design" />

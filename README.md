@@ -5,7 +5,7 @@ A modern, themeable UI framework for **WPF on .NET 10**.
 - Light, dark and system themes, switchable at runtime
 - Custom accent colors (or the Windows accent)
 - Restyled standard WPF controls — merge one dictionary and they're all styled
-- Custom controls: `TesselWindow`, `NavigationView`, `ContentDialog`, `Snackbar`, `InfoBar`, `Card`, `SettingsCard`, `ToggleSwitch`, `NumberBox`, `ProgressRing`, `Badge`, `Avatar`, `FontIcon`, `AutoSuggestBox`, `TimePicker`, `ColorPicker`, `RatingControl`, `SplitButton`, `DropDownButton`, `ToggleSplitButton`, `Chip`, `SegmentedControl`, `TabView`, `BreadcrumbBar`, `Pagination`, `Stepper`, `Flyout`, `TeachingTip`, `Skeleton`, `MessageDialog`, `FileBrowser`, `FileChooserDialog`, `FileSaverDialog`
+- Custom controls: `TesselWindow`, `NavigationView`, `ContentDialog`, `Snackbar`, `InfoBar`, `Card`, `SettingsCard`, `ToggleSwitch`, `NumberBox`, `ProgressRing`, `Badge`, `Avatar`, `FontIcon`, `AutoSuggestBox`, `TimePicker`, `ColorPicker`, `RatingControl`, `SplitButton`, `DropDownButton`, `ToggleSplitButton`, `Chip`, `SegmentedControl`, `TabView`, `BreadcrumbBar`, `Pagination`, `Stepper`, `Flyout`, `TeachingTip`, `Skeleton`, `MessageDialog`, `FileBrowser`, `FileChooserDialog`, `FileSaverDialog`, `Timeline`, `AnimationTimeline`
 - MVVM helpers: `ObservableObject`, `RelayCommand`, `RelayCommand<T>`, `AsyncRelayCommand`
 - Converters: bool/null → Visibility, inverse bool, enum ↔ bool, color → brush
 
@@ -32,7 +32,7 @@ dotnet add package Tessel.NET
 or add it to the project file:
 
 ```xml
-<PackageReference Include="Tessel.NET" Version="1.1.0" />
+<PackageReference Include="Tessel.NET" Version="1.2.0" />
 ```
 
 (To work with the source instead, reference `src/Tessel.NET/Tessel.NET.csproj`.) Then merge the theme into `App.xaml`:
@@ -190,6 +190,24 @@ void OnTextChanged(object? sender, AutoSuggestBoxTextChangedEventArgs e)
 
 <tessel:Pagination CurrentPage="{Binding Page}" PageCount="24" />
 
+<!-- Events in chronological order. Layout="Alternate" alternates the sides; Orientation="Horizontal" lays it out sideways. -->
+<tessel:Timeline>
+    <tessel:TimelineItem Header="Order placed" Timestamp="10:02" Icon="{tessel:Glyph Shop}" Kind="Success">Payment received.</tessel:TimelineItem>
+    <tessel:TimelineItem Header="Out for delivery" Timestamp="Tomorrow" IsPending="True" />
+</tessel:Timeline>
+
+<!-- From data: the item becomes the content; bind the other properties with an ItemContainerStyle. -->
+<tessel:Timeline ItemsSource="{Binding Activity}">
+    <tessel:Timeline.ItemContainerStyle>
+        <Style TargetType="tessel:TimelineItem">
+            <Setter Property="Header" Value="{Binding Title}" />
+            <Setter Property="Timestamp" Value="{Binding Time}" />
+            <Setter Property="TimestampStringFormat" Value="d MMM, HH:mm" />
+            <Setter Property="Kind" Value="{Binding Kind}" />
+        </Style>
+    </tessel:Timeline.ItemContainerStyle>
+</tessel:Timeline>
+
 <tessel:Stepper CurrentStep="{Binding Step}">           <!-- Orientation="Vertical" for a timeline -->
     <tessel:StepperItem Header="Cart" Description="Review your items" />
     <tessel:StepperItem Header="Payment" IsError="True" />
@@ -220,6 +238,51 @@ if (await save.ShowAsync()) File.WriteAllBytes(save.FileName!, bytes);
 Both dialogs have a search box (searches the open folder and its subfolders) and a Details / Thumbnails switch; set `ViewMode = FileBrowserView.Thumbnails` to start with image previews.
 
 `FileBrowser` is the control behind them and can be used on its own: `<tessel:FileBrowser CurrentDirectory="C:\Projects" Multiselect="True" />`.
+
+### Animation timeline (video and pixel editors)
+
+`AnimationTimeline` is an editing timeline: a ruler with a playhead, tracks with clips, markers, a loop region, zoom, snapping and playback. Positions are whole frames, so the same control works for a video editor (timecode, long clips) and a pixel editor (frame numbers, one-frame cels and keyframes).
+
+```xml
+<tessel:AnimationTimeline x:Name="Timeline" FramesPerSecond="24" Duration="480"
+                          CurrentFrameChanged="OnFrameChanged" ClipsMoved="OnClipsMoved" />
+```
+
+```csharp
+var video = new AnimationTrack("Video 1") { Height = 44 };
+video.Clips.Add(new AnimationClip("Intro.mp4", start: 0, length: 120));
+video.Clips.Add(new AnimationClip("Interview.mp4", start: 120, length: 180));
+Timeline.Tracks.Add(video);
+Timeline.Markers.Add(new AnimationMarker(120, "Interview"));
+
+Timeline.Play();                                  // Space toggles playback
+void OnFrameChanged(object s, RoutedPropertyChangedEventArgs<int> e) => Preview.ShowFrame(e.NewValue);
+
+// A pixel editor: layers as tracks, one-frame cels, frame numbers on the ruler.
+var pixels = new AnimationTimeline { FramesPerSecond = 12, Duration = 24, PixelsPerFrame = 34, TimeDisplay = TimelineTimeDisplay.Frames };
+var layer = new AnimationTrack("Ball");
+for (var frame = 0; frame < 24; frame++) layer.Clips.Add(new AnimationClip((frame + 1).ToString(), frame, 1));
+layer.Clips.Add(new AnimationClip("", 6, 1) { IsKeyframe = true });   // a keyframe diamond
+```
+
+The user can scrub the ruler, drag a box to select several clips, drag clips (also to other tracks) and trim their edges, Shift-drag the ruler to set a loop region and zoom with Ctrl + mouse wheel. Everything they change is written to the model (`AnimationClip.Start`, `Length`, the track's `Clips`) and reported by `ClipsMoved`, `ClipsResized`, `ClipsDeleting`, `SelectionChanged` and `ClipActivated`.
+
+Editing rules, undo and waveforms:
+
+```csharp
+Timeline.PreventOverlap = true;        // clips stop at their neighbors
+Timeline.ConstrainToDuration = true;   // ...or AutoExtendDuration = true to grow the project instead
+
+if (!Timeline.AddClip(video, new AnimationClip("Outro.mp4", 300, 90))) ShowMessage("No room there");
+
+// Ctrl+Z / Ctrl+Y work out of the box; call these from your own Edit menu.
+if (Timeline.CanUndo) Timeline.Undo();
+Timeline.RecordHistory("Rename clip", undo: () => clip.Name = old, redo: () => clip.Name = renamed);
+
+// Audio: peaks from raw samples; MediaLength lets the user trim into the recording without stretching the waveform.
+var voice = new AnimationClip("Voice.wav", 0, 120) { MediaLength = 240, MediaStart = 30,
+                                                      Waveform = AnimationWaveform.FromPcm16(samples, bins: 480) };
+```
 
 ### Popups and loading states
 

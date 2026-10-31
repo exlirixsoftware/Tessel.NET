@@ -6,6 +6,6 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <Authors>EXLIRIX Software;Jurca Alexandru-Cristian</Authors>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 </Project>
