@@ -16,6 +16,12 @@
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Progress.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/ColorRating.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/FileBrowser.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/RangeSlider.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Notifications.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/CurveEditor.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Dashboard.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Carousel.xaml" />
+        <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Tools.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/Timeline.xaml" />
         <ResourceDictionary Source="/Tessel.NET;component/Themes/Custom/AnimationTimeline.xaml" />
     </ResourceDictionary.MergedDictionaries>

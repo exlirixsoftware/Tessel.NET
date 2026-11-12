@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +25,82 @@ public partial class FeedbackPage : UserControl
     private void OnTipAction(object? sender, EventArgs e) => Snackbar.Show("Great!", "You can reopen the tip any time.", owner: Window.GetWindow(this));
 
     private void OnReopenInfoBar(object sender, RoutedEventArgs e) => ErrorBar.IsOpen = true;
+
+    private NotificationHost? Toasts()
+    {
+        var host = NotificationHost.Attach(Window.GetWindow(this));
+        if (host != null && !_toastsHooked)
+        {
+            _toastsHooked = true;
+            host.MaxVisible = 4;
+            host.NotificationClosed += (_, e) => ToastStatus.Text = $"Last event: “{e.Notification.Title}” closed ({e.Reason})";
+        }
+        return host;
+    }
+
+    private bool _toastsHooked;
+    private int _toastCounter;
+
+    private void OnToastPositionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (ToastPosition.SelectedItem is ComboBoxItem { Tag: string tag } && Toasts() is { } host)
+        {
+            host.Position = Enum.Parse<NotificationPosition>(tag);
+        }
+    }
+
+    private void OnToast(object sender, RoutedEventArgs e)
+        => Toasts()?.Show($"Notification {++_toastCounter}", "It goes away by itself; hover it to pause the countdown.", InfoBarSeverity.Informational);
+
+    private void OnToastWithAction(object sender, RoutedEventArgs e)
+    {
+        var host = Toasts();
+        host?.Show("Conversation archived", "You can bring it back.", InfoBarSeverity.Success, TimeSpan.FromSeconds(8), "Undo",
+            () => host.Show("Restored", "The conversation is back in your inbox.", InfoBarSeverity.Informational, TimeSpan.FromSeconds(3)));
+    }
+
+    private void OnToastProgress(object sender, RoutedEventArgs e)
+    {
+        var notification = Toasts()?.Show("Uploading report.pdf", "0%", InfoBarSeverity.Informational, Timeout.InfiniteTimeSpan);
+        if (notification == null) return;
+
+        var percent = 0;
+        var timer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromMilliseconds(120) };
+        timer.Tick += (_, _) =>
+        {
+            percent += 7;
+            if (notification.IsClosed)
+            {
+                timer.Stop();
+            }
+            else if (percent >= 100)
+            {
+                timer.Stop();
+                notification.Title = "Upload complete";
+                notification.Message = "report.pdf is ready.";
+                notification.Severity = InfoBarSeverity.Success;
+                Toasts()?.Show("Done", "Closing the upload notification…", InfoBarSeverity.Success, TimeSpan.FromSeconds(2));
+                notification.Close();
+            }
+            else
+            {
+                notification.Message = $"{percent}%";
+            }
+        };
+        timer.Start();
+    }
+
+    private void OnToastBurst(object sender, RoutedEventArgs e)
+    {
+        var host = Toasts();
+        if (host == null) return;
+        for (var i = 1; i <= 8; i++)
+        {
+            host.Show($"Message {i} of 8", i > host.MaxVisible ? "It waited in the queue." : "Shown right away.", (InfoBarSeverity)(i % 4), TimeSpan.FromSeconds(3));
+        }
+    }
+
+    private void OnToastClear(object sender, RoutedEventArgs e) => Toasts()?.Clear();
 
     private void OnSnackbar(object sender, RoutedEventArgs e)
     {

@@ -80,6 +80,28 @@
                 </WrapPanel>
             </tessel:Card>
 
+            <tessel:Card Header="NotificationHost" Style="{StaticResource Section}">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="Stacked notifications with a position, a queue, an action button, a countdown bar (it pauses while the mouse is over a notification) and handles you can update." TextWrapping="Wrap" />
+                    <WrapPanel>
+                        <ComboBox x:Name="ToastPosition" Width="150" Margin="0,0,12,8" SelectedIndex="5" SelectionChanged="OnToastPositionChanged">
+                            <ComboBoxItem Content="Top left" Tag="TopLeft" />
+                            <ComboBoxItem Content="Top center" Tag="TopCenter" />
+                            <ComboBoxItem Content="Top right" Tag="TopRight" />
+                            <ComboBoxItem Content="Bottom left" Tag="BottomLeft" />
+                            <ComboBoxItem Content="Bottom center" Tag="BottomCenter" />
+                            <ComboBoxItem Content="Bottom right" Tag="BottomRight" />
+                        </ComboBox>
+                        <Button Margin="0,0,8,8" Click="OnToast" Content="Show one" />
+                        <Button Margin="0,0,8,8" Click="OnToastWithAction" Content="With an Undo action" />
+                        <Button Margin="0,0,8,8" Click="OnToastProgress" Content="Live progress" />
+                        <Button Margin="0,0,8,8" Click="OnToastBurst" Content="Send 8 (queue)" />
+                        <Button Margin="0,0,0,8" Click="OnToastClear" Content="Clear all" />
+                    </WrapPanel>
+                    <TextBlock x:Name="ToastStatus" Style="{StaticResource Tessel.Text.Secondary}" Text="Last event: —" />
+                </StackPanel>
+            </tessel:Card>
+
             <tessel:Card Header="ContentDialog" Style="{StaticResource Section}">
                 <StackPanel>
                     <WrapPanel>

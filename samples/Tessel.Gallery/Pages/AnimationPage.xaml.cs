@@ -19,6 +19,9 @@ public partial class AnimationPage : UserControl
         BuildPixelProject();
         UpdateVideoPreview();
         UpdatePixelPreview();
+        System.ComponentModel.DependencyPropertyDescriptor.FromProperty(CurveEditor.CurrentTimeProperty, typeof(CurveEditor))!.AddValueChanged(Curve, (_, _) => UpdateCurvePreview());
+        BallTrack.SizeChanged += (_, _) => UpdateCurvePreview();
+        UpdateCurvePreview();
 
         // Fit both projects to the width once the page has been laid out.
         Loaded += (_, _) => Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Loaded, () =>
@@ -79,6 +82,75 @@ public partial class AnimationPage : UserControl
             peaks[i] = (float)Math.Min(1, envelope * (0.35 + 0.65 * random.NextDouble()));
         }
         return peaks;
+    }
+
+    private System.Windows.Threading.DispatcherTimer? _curveTimer;
+
+    private void UpdateCurvePreview()
+    {
+        var value = Curve.Evaluate(Curve.CurrentTime);
+        BallShift.X = value * Math.Max(0, BallTrack.ActualWidth - BallTrack.Padding.Left - BallTrack.Padding.Right - 26);
+        CurveInfo.Text = $"t = {Curve.CurrentTime:0.00}   value = {value:0.00}";
+    }
+
+    private void OnCurveEdited(object? sender, EventArgs e) => UpdateCurvePreview();
+
+    private void OnEasingChosen(object sender, SelectionChangedEventArgs e)
+    {
+        if (EasingBox.SelectedItem is not ComboBoxItem { Tag: string tag }) return;
+        if (!Curve.ApplyEasingToSelected(Enum.Parse<CurveEasing>(tag)))
+        {
+            // nothing selected: use the first segment
+            Curve.SelectKey(Curve.Curve?.Keys.FirstOrDefault());
+            Curve.ApplyEasingToSelected(Enum.Parse<CurveEasing>(tag));
+        }
+        Curve.FitToCurve();
+    }
+
+    private void OnInterpolationChosen(object sender, SelectionChangedEventArgs e)
+    {
+        if (InterpolationBox.SelectedItem is ComboBoxItem { Tag: string tag } && Curve.SelectedKey != null)
+        {
+            Curve.SetSelectedInterpolation(Enum.Parse<CurveInterpolation>(tag));
+        }
+    }
+
+    private void OnCurvePlay(object sender, RoutedEventArgs e)
+    {
+        _curveTimer?.Stop();
+        var clock = System.Diagnostics.Stopwatch.StartNew();
+        _curveTimer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromMilliseconds(16) };
+        _curveTimer.Tick += (_, _) =>
+        {
+            var t = clock.Elapsed.TotalSeconds / 2.0;
+            Curve.CurrentTime = Math.Min(1, t);
+            if (t >= 1) _curveTimer?.Stop();
+        };
+        _curveTimer.Start();
+    }
+
+    private void OnCurveFit(object sender, RoutedEventArgs e) => Curve.FitToCurve();
+
+    private void OnCurveUndo(object sender, RoutedEventArgs e) => Curve.Undo();
+
+    private void OnCurveRedo(object sender, RoutedEventArgs e) => Curve.Redo();
+
+    private void OnCurveZoomIn(object sender, RoutedEventArgs e) => Curve.ZoomIn();
+
+    private void OnCurveZoomOut(object sender, RoutedEventArgs e) => Curve.ZoomOut();
+
+    private void OnCurveResetView(object sender, RoutedEventArgs e) => Curve.ResetView();
+
+    private void OnCurveReset(object sender, RoutedEventArgs e)
+    {
+        _curveTimer?.Stop();
+        Curve.Curve = AnimationCurve.CreateDefault();
+        Curve.MinValue = -0.25;
+        Curve.MaxValue = 1.25;
+        Curve.MinTime = 0;
+        Curve.MaxTime = 1;
+        Curve.CurrentTime = 0;
+        UpdateCurvePreview();
     }
 
     private void UpdateVideoPreview()

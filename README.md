@@ -32,7 +32,7 @@ dotnet add package Tessel.NET
 or add it to the project file:
 
 ```xml
-<PackageReference Include="Tessel.NET" Version="1.2.0" />
+<PackageReference Include="Tessel.NET" Version="1.3.0" />
 ```
 
 (To work with the source instead, reference `src/Tessel.NET/Tessel.NET.csproj`.) Then merge the theme into `App.xaml`:
@@ -238,6 +238,78 @@ if (await save.ShowAsync()) File.WriteAllBytes(save.FileName!, bytes);
 Both dialogs have a search box (searches the open folder and its subfolders) and a Details / Thumbnails switch; set `ViewMode = FileBrowserView.Thumbnails` to start with image previews.
 
 `FileBrowser` is the control behind them and can be used on its own: `<tessel:FileBrowser CurrentDirectory="C:\Projects" Multiselect="True" />`.
+
+### Dashboards, inputs and editor shell
+
+```xml
+<tessel:Gauge Value="72" Unit="%" Header="CPU">
+    <tessel:GaugeRange From="80" To="100" Brush="{DynamicResource Tessel.DangerBrush}" />
+</tessel:Gauge>
+<tessel:Sparkline Values="{Binding Revenue}" Kind="Area" Height="40" />
+<tessel:CalendarHeatmap Data="{Binding ActivityByDay}" DayClicked="OnDayClicked" />
+<tessel:AvatarGroup ItemsSource="{Binding Team}" DisplayMemberPath="Name" PresenceMemberPath="Status" />
+<tessel:TagInput Suggestions="{Binding AllLabels}" Tags="{Binding Labels}" />
+<tessel:PropertyGrid SelectedObject="{Binding SelectedShape}" />
+<tessel:GanttChart x:Name="Plan" TaskChanged="OnTaskChanged" />
+<tessel:DockingManager Document="{Binding Editor}">
+    <tessel:DockPane Title="Explorer" Side="Left">...</tessel:DockPane>
+    <tessel:DockPane Title="Output" Side="Bottom">...</tessel:DockPane>
+</tessel:DockingManager>
+```
+
+```csharp
+CommandPalette.Attach(this, new[]                      // Ctrl+K
+{
+    new PaletteCommand("Save as...", SaveAs) { Category = "File", Shortcut = "Ctrl+Shift+S" },
+    new PaletteCommand("Toggle theme", ToggleTheme) { Keywords = "dark light" },
+});
+
+var mention = new MentionBox { Candidates = new[] { "Ada Lovelace", "Alan Turing" } };   // type @ + letters
+IReadOnlyList<string> who = mention.GetMentions();
+
+Plan.Tasks.Add(new GanttTask("Design", start, end) { Progress = 0.5 });
+Plan.Tasks.Add(new GanttTask("Build", end, end.AddDays(14)) { DependsOn = { design } });
+
+string layout = Dock.SaveLayout();                       // remember the arrangement
+Dock.RestoreLayout(layout);
+```
+
+### Curve editor
+
+```xml
+<tessel:CurveEditor x:Name="Curve" Height="300" CurrentTime="{Binding Time, Mode=TwoWay}" />
+```
+
+```csharp
+Curve.Curve = AnimationCurve.FromEasing(CurveEasing.EaseOutBack);   // or build one with AddKey(time, value)
+Curve.FitToCurve();
+
+double progress = Curve.Curve.Evaluate(0.35);                        // use the curve anywhere, with or without the control
+Curve.ApplyEasingToSelected(CurveEasing.EaseInOut);                   // shape the segment of the selected key
+```
+
+Drag keys and handles, drag a box (or Ctrl-click) to select several keys, double-click to add a key, Delete to remove the selected ones. Ctrl + mouse wheel zooms, a middle-button drag pans, Ctrl+Z / Ctrl+Y undo and redo (`Undo()`, `Redo()`, `CanUndo`).
+
+### NotificationHost
+
+```csharp
+var toasts = NotificationHost.Attach(this);   // one host on top of the window (or put <tessel:NotificationHost /> last in your root grid)
+toasts.Position = NotificationPosition.TopRight;
+
+toasts.Show("Archived", "You can bring it back.", InfoBarSeverity.Success, actionText: "Undo", action: Restore);
+
+var upload = toasts.Show("Uploading...", "0%", duration: Timeout.InfiniteTimeSpan);
+upload.Message = "40%";                       // update it while it is visible
+upload.Close();
+```
+
+### RangeSlider
+
+```xml
+<tessel:RangeSlider Minimum="0" Maximum="1000" LowerValue="200" UpperValue="650" MinimumRange="100" SnapInterval="50" />
+```
+
+Two thumbs select a range; `LowerValue` and `UpperValue` are two-way bindable and `RangeChanged` is raised when either changes.
 
 ### Animation timeline (video and pixel editors)
 

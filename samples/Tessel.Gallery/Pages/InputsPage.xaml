@@ -99,6 +99,13 @@
                         <Slider x:Name="VolumeSlider" Maximum="100" Value="64" />
                         <TextBlock Margin="0,20,0,8" Text="With ticks" />
                         <Slider IsSnapToTickEnabled="True" Maximum="10" TickFrequency="1" TickPlacement="BottomRight" Value="4" />
+                        <DockPanel Margin="0,20,0,8">
+                            <TextBlock DockPanel.Dock="Right" Style="{StaticResource Tessel.Text.Secondary}">
+                                <Run Text="{Binding LowerValue, ElementName=PriceRange, StringFormat={}{0:C0}}" /> – <Run Text="{Binding UpperValue, ElementName=PriceRange, StringFormat={}{0:C0}}" />
+                            </TextBlock>
+                            <TextBlock Text="Price range (RangeSlider)" />
+                        </DockPanel>
+                        <tessel:RangeSlider x:Name="PriceRange" LowerValue="200" MinimumRange="100" Maximum="1000" SnapInterval="50" UpperValue="650" />
                         <TextBlock Margin="0,20,0,8" Text="Disabled" />
                         <Slider IsEnabled="False" Maximum="100" Value="30" />
                     </StackPanel>

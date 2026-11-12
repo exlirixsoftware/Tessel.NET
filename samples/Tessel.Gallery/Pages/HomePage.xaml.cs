@@ -24,6 +24,7 @@ public partial class HomePage : UserControl
             "Buttons" => typeof(ButtonsPage),
             "Feedback" => typeof(FeedbackPage),
             "Animation" => typeof(AnimationPage),
+            "Tools" => typeof(ToolsPage),
             _ => null,
         };
         if (page != null) Navigation?.Navigate(page);
