@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:Tessel.NET.Controls">
+
+    <!--  Sparkline, Gauge and CalendarHeatmap draw themselves (OnRender); the styles supply the theme brushes.  -->
+    <Style TargetType="{x:Type c:Sparkline}">
+        <Setter Property="Stroke" Value="{DynamicResource Tessel.AccentBrush}" />
+        <Setter Property="NegativeBrush" Value="{DynamicResource Tessel.DangerBrush}" />
+        <Setter Property="Background" Value="{DynamicResource Tessel.SurfaceBrush}" />
+        <Setter Property="MinWidth" Value="40" />
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="SnapsToDevicePixels" Value="False" />
+    </Style>
+
+    <Style TargetType="{x:Type c:Gauge}">
+        <Setter Property="ValueBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+        <Setter Property="TrackBrush" Value="{DynamicResource Tessel.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="Width" Value="150" />
+        <Setter Property="Height" Value="150" />
+    </Style>
+
+    <Style TargetType="{x:Type c:CalendarHeatmap}">
+        <Setter Property="LevelBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+        <Setter Property="EmptyBrush" Value="{DynamicResource Tessel.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextSecondaryBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+
+</ResourceDictionary>

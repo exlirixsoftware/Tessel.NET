@@ -1,0 +1,147 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:Tessel.NET.Controls">
+
+    <!--  AvatarGroup: the avatars are created in code and put into PART_Panel.  -->
+    <Style TargetType="{x:Type c:AvatarGroup}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:AvatarGroup}">
+                    <StackPanel x:Name="PART_Panel" Orientation="Horizontal" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Carousel  -->
+    <Style TargetType="{x:Type c:Carousel}">
+        <Setter Property="Background" Value="{DynamicResource Tessel.SurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Tessel.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Tessel.TextBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="MinHeight" Value="140" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:Carousel}">
+                    <ControlTemplate.Resources>
+                        <BooleanToVisibilityConverter x:Key="ToVisibility" />
+
+                        <Style x:Key="Arrow" TargetType="{x:Type Button}">
+                            <Setter Property="Width" Value="34" />
+                            <Setter Property="Height" Value="34" />
+                            <Setter Property="Margin" Value="10" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Focusable" Value="False" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Grid>
+                                            <Ellipse x:Name="Disc"
+                                                     Fill="{DynamicResource Tessel.SurfaceBrush}"
+                                                     Opacity="0.88"
+                                                     Stroke="{DynamicResource Tessel.BorderBrush}"
+                                                     StrokeThickness="1" />
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontFamily="{DynamicResource Tessel.IconFontFamily}"
+                                                       FontSize="12"
+                                                       Foreground="{DynamicResource Tessel.TextBrush}"
+                                                       Text="{TemplateBinding Content}" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Disc" Property="Opacity" Value="1" />
+                                                <Setter TargetName="Disc" Property="Stroke" Value="{DynamicResource Tessel.AccentBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Opacity" Value="0.35" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style x:Key="Dot" TargetType="{x:Type Button}">
+                            <Setter Property="Focusable" Value="False" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Margin" Value="3,0" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border x:Name="Pill"
+                                                Width="8"
+                                                Height="8"
+                                                Background="White"
+                                                CornerRadius="4"
+                                                Opacity="0.6" />
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter TargetName="Pill" Property="Width" Value="20" />
+                                                <Setter TargetName="Pill" Property="Opacity" Value="1" />
+                                            </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Pill" Property="Opacity" Value="1" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <DataTemplate x:Key="DotTemplate">
+                            <Button Style="{StaticResource Dot}" />
+                        </DataTemplate>
+                    </ControlTemplate.Resources>
+
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ClipToBounds="True"
+                            CornerRadius="8"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid x:Name="PART_Host" ClipToBounds="True" />
+                            <Button x:Name="PART_Previous"
+                                    HorizontalAlignment="Left"
+                                    Content="&#xE76B;"
+                                    Style="{StaticResource Arrow}"
+                                    Visibility="{Binding ShowArrows, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ToVisibility}}" />
+                            <Button x:Name="PART_Next"
+                                    HorizontalAlignment="Right"
+                                    Content="&#xE76C;"
+                                    Style="{StaticResource Arrow}"
+                                    Visibility="{Binding ShowArrows, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ToVisibility}}" />
+                            <Border Margin="0,0,0,10"
+                                    Padding="6,5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Background="#59000000"
+                                    CornerRadius="10"
+                                    Visibility="{Binding ShowDots, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ToVisibility}}">
+                                <ItemsControl Focusable="False"
+                                              ItemTemplate="{StaticResource DotTemplate}"
+                                              ItemsSource="{Binding Dots, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource Tessel.AccentBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

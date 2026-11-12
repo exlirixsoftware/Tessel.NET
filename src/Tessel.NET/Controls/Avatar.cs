@@ -7,6 +7,16 @@ using System.Windows.Shapes;
 
 namespace Tessel.NET.Controls;
 
+/// <summary>The availability dot drawn on the corner of an <see cref="Avatar"/>.</summary>
+public enum AvatarPresence
+{
+    None,
+    Online,
+    Away,
+    Busy,
+    Offline,
+}
+
 /// <summary>A round picture of a person, falling back to their initials.</summary>
 [TemplatePart(Name = "PART_Image", Type = typeof(Ellipse))]
 public class Avatar : Control
@@ -55,6 +65,24 @@ public class Avatar : Control
         set => SetValue(IsColorFromNameProperty, value);
     }
 
+    public static readonly DependencyProperty PresenceProperty = DependencyProperty.Register(
+        nameof(Presence), typeof(AvatarPresence), typeof(Avatar), new PropertyMetadata(AvatarPresence.None));
+
+    /// <summary>Shows a status dot (online, away, busy or offline) on the lower right corner.</summary>
+    public AvatarPresence Presence
+    {
+        get => (AvatarPresence)GetValue(PresenceProperty);
+        set => SetValue(PresenceProperty, value);
+    }
+
+    private static readonly DependencyPropertyKey PresenceSizePropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(PresenceSize), typeof(double), typeof(Avatar), new PropertyMetadata(10d));
+
+    public static readonly DependencyProperty PresenceSizeProperty = PresenceSizePropertyKey.DependencyProperty;
+
+    /// <summary>The diameter of the status dot (a third of the avatar, at least 8).</summary>
+    public double PresenceSize => (double)GetValue(PresenceSizeProperty);
+
     private static readonly DependencyPropertyKey FillPropertyKey = DependencyProperty.RegisterReadOnly(
         nameof(Fill), typeof(Brush), typeof(Avatar), new PropertyMetadata(null));
 
@@ -81,6 +109,7 @@ public class Avatar : Control
     {
         base.OnRenderSizeChanged(sizeInfo);
         var size = Math.Min(ActualWidth, ActualHeight);
+        SetValue(PresenceSizePropertyKey, Math.Max(8, size * 0.3));
         if (size > 0 && ReadLocalValue(FontSizeProperty) == DependencyProperty.UnsetValue)
         {
             SetCurrentValue(FontSizeProperty, Math.Max(8, size * 0.38));

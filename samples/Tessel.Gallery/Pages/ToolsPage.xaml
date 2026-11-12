@@ -1,0 +1,206 @@
+<UserControl x:Class="Tessel.Gallery.Pages.ToolsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:tessel="http://schemas.tessel.net/ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Style="{StaticResource PageHost}">
+            <TextBlock Style="{StaticResource PageTitle}" Text="Dashboards &amp; tools" />
+            <TextBlock Style="{StaticResource PageDescription}" Text="Small charts, a calendar heat-map, avatars, a carousel, tags and mentions, a command palette, a property inspector, a Gantt chart and a docking shell: the pieces of a dashboard or an editor." />
+
+            <tessel:Card Header="Gauge, Sparkline and CalendarHeatmap" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel>
+                        <tessel:Gauge x:Name="CpuGauge" Margin="0,0,16,8" Header="CPU" Unit="%" Value="38">
+                            <tessel:GaugeRange From="0" To="60" Brush="{DynamicResource Tessel.SuccessBrush}" />
+                            <tessel:GaugeRange From="60" To="85" Brush="{DynamicResource Tessel.WarningBrush}" />
+                            <tessel:GaugeRange From="85" To="100" Brush="{DynamicResource Tessel.DangerBrush}" />
+                        </tessel:Gauge>
+                        <tessel:Gauge Margin="0,0,16,8" Header="Memory" Unit="GB" Maximum="16" StringFormat="0.0" Value="9.6" />
+                        <tessel:Gauge Margin="0,0,16,8" Header="Battery" Unit="%" SweepAngle="180" StartAngle="180" Height="110" Value="72">
+                            <tessel:GaugeRange From="0" To="20" Brush="{DynamicResource Tessel.DangerBrush}" />
+                            <tessel:GaugeRange From="20" To="100" Brush="{DynamicResource Tessel.SuccessBrush}" />
+                        </tessel:Gauge>
+                        <StackPanel Width="230" Margin="8,8,0,8" VerticalAlignment="Center">
+                            <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="CPU load" />
+                            <Slider x:Name="CpuSlider" Maximum="100" Value="{Binding Value, ElementName=CpuGauge, Mode=TwoWay}" />
+                            <Button Margin="0,10,0,0" HorizontalAlignment="Left" Click="OnRandomLoad" Content="Random load" />
+                        </StackPanel>
+                    </WrapPanel>
+
+                    <Grid Margin="0,12,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,12,0">
+                            <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="Revenue (line)" />
+                            <tessel:Sparkline x:Name="LineSpark" Height="52" ShowExtremes="True" IsSmooth="True" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="6,0">
+                            <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="Visitors (area)" />
+                            <tessel:Sparkline x:Name="AreaSpark" Height="52" Kind="Area" IsSmooth="True" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Margin="12,0,0,0">
+                            <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="Profit (bars)" />
+                            <tessel:Sparkline x:Name="BarSpark" Height="52" Kind="Bars" />
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Margin="0,0,0,6" Style="{StaticResource Tessel.Text.Secondary}" Text="Activity over the last year (click a day)" />
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                        <tessel:CalendarHeatmap x:Name="Heatmap" DayClicked="OnHeatmapDay" />
+                    </ScrollViewer>
+                    <TextBlock x:Name="HeatmapInfo" Margin="0,6,0,0" Style="{StaticResource Tessel.Text.Caption}" Text="No day selected" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="Avatar, AvatarGroup and Carousel" Style="{StaticResource Section}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Width="280">
+                        <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.BodyStrong}" Text="Presence" />
+                        <StackPanel Margin="0,0,0,16" Orientation="Horizontal">
+                            <tessel:Avatar Margin="0,0,10,0" DisplayName="Ada Lovelace" Presence="Online" />
+                            <tessel:Avatar Margin="0,0,10,0" DisplayName="Alan Turing" Presence="Away" />
+                            <tessel:Avatar Margin="0,0,10,0" DisplayName="Grace Hopper" Presence="Busy" />
+                            <tessel:Avatar DisplayName="Linus Torvalds" Presence="Offline" />
+                        </StackPanel>
+                        <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.BodyStrong}" Text="AvatarGroup" />
+                        <tessel:AvatarGroup x:Name="Team" Margin="0,0,0,8" DisplayMemberPath="Name" MaxVisible="4" PresenceMemberPath="Presence" />
+                        <WrapPanel>
+                            <Button Margin="0,0,8,0" Click="OnAddMember" Content="Add member" />
+                            <Button Click="OnRemoveMember" Content="Remove" />
+                        </WrapPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="24,0,0,0">
+                        <DockPanel Margin="0,0,0,8">
+                            <tessel:ToggleSwitch HorizontalAlignment="Right" Checked="OnAutoPlay" Content="Auto play" DockPanel.Dock="Right" Unchecked="OnAutoPlay" />
+                            <TextBlock Style="{StaticResource Tessel.Text.BodyStrong}" Text="Carousel" />
+                        </DockPanel>
+                        <tessel:Carousel x:Name="Slides" Height="190">
+                            <Border Background="{DynamicResource Tessel.AccentBrush}">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontSize="26" FontWeight="SemiBold" Foreground="White" Text="Welcome" TextAlignment="Center" />
+                                    <TextBlock Margin="0,6,0,0" Foreground="White" Opacity="0.85" Text="Swipe through the pages with the arrows or the dots" />
+                                </StackPanel>
+                            </Border>
+                            <Border Background="{DynamicResource Tessel.SuccessBrush}">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontSize="26" FontWeight="SemiBold" Foreground="White" Text="Themes" TextAlignment="Center" />
+                                    <TextBlock Margin="0,6,0,0" Foreground="White" Opacity="0.85" Text="Light, dark and any accent color" />
+                                </StackPanel>
+                            </Border>
+                            <Border Background="{DynamicResource Tessel.WarningBrush}">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontSize="26" FontWeight="SemiBold" Foreground="White" Text="Ready" TextAlignment="Center" />
+                                    <TextBlock Margin="0,6,0,0" Foreground="White" Opacity="0.85" Text="Build something with it" />
+                                </StackPanel>
+                            </Border>
+                        </tessel:Carousel>
+                    </StackPanel>
+                </Grid>
+            </tessel:Card>
+
+            <tessel:Card Header="TagInput, MentionBox and CommandPalette" Style="{StaticResource Section}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,12,0">
+                        <TextBlock Margin="0,0,0,6" Style="{StaticResource Tessel.Text.BodyStrong}" Text="TagInput" />
+                        <tessel:TagInput x:Name="Tags" Placeholder="Add a label..." />
+                        <TextBlock x:Name="TagInfo" Margin="0,6,0,0" Style="{StaticResource Tessel.Text.Caption}" Text="Type, then Enter or a comma. Try “de”." />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                        <TextBlock Margin="0,0,0,6" Style="{StaticResource Tessel.Text.BodyStrong}" Text="MentionBox" />
+                        <tessel:MentionBox x:Name="Mentions" MinHeight="90" />
+                        <TextBlock x:Name="MentionInfo" Margin="0,6,0,0" Style="{StaticResource Tessel.Text.Caption}" Text="Type @ and a name. Mentioned: —" />
+                    </StackPanel>
+                </Grid>
+            </tessel:Card>
+
+            <tessel:Card Header="CommandPalette" Style="{StaticResource Section}">
+                <StackPanel>
+                    <TextBlock Margin="0,0,0,10" Style="{StaticResource Tessel.Text.Secondary}" Text="Press Ctrl+K anywhere in this window, then type a few letters (“tg” finds “Toggle theme”)." />
+                    <Button HorizontalAlignment="Left" Click="OnOpenPalette" Content="Open the command palette" Style="{StaticResource Tessel.Button.Accent}" />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="PropertyGrid" Style="{StaticResource Section}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="340" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <tessel:PropertyGrid x:Name="Inspector" Height="460" />
+                    <Border Grid.Column="1" Margin="20,0,0,0" Background="{DynamicResource Tessel.SurfaceAltBrush}" CornerRadius="8">
+                        <Grid>
+                            <TextBlock Margin="14,10" Style="{StaticResource Tessel.Text.Secondary}" Text="Live preview of the edited object" />
+                            <Border x:Name="Preview" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock x:Name="PreviewText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold" Foreground="White" />
+                            </Border>
+                            <TextBlock x:Name="InspectorInfo" Margin="14,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource Tessel.Text.Caption}" Text="Change a value on the left." />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </tessel:Card>
+
+            <tessel:Card Header="GanttChart" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel Margin="0,0,0,10">
+                        <Button Margin="0,0,8,0" Click="OnGanttAdd" Content="Add task" />
+                        <Button Margin="0,0,8,0" Click="OnGanttFit" Content="Fit all" />
+                        <Button Margin="0,0,8,0" Click="OnGanttZoomIn" Content="Zoom in" />
+                        <Button Click="OnGanttZoomOut" Content="Zoom out" />
+                    </WrapPanel>
+                    <tessel:GanttChart x:Name="Gantt" Height="330" TaskChanged="OnGanttChanged" SelectionChanged="OnGanttSelection" />
+                    <TextBlock x:Name="GanttInfo" Margin="0,8,0,0" Style="{StaticResource Tessel.Text.Caption}" Text="Drag a bar to move it, its ends to resize it, the little triangle under the selected bar to set the progress. Ctrl + wheel zooms." />
+                </StackPanel>
+            </tessel:Card>
+
+            <tessel:Card Header="DockingManager" Style="{StaticResource Section}">
+                <StackPanel>
+                    <WrapPanel Margin="0,0,0,10">
+                        <Button Margin="0,0,8,0" Click="OnSaveLayout" Content="Save layout" />
+                        <Button Margin="0,0,8,0" Click="OnRestoreLayout" Content="Restore layout" />
+                        <Button Margin="0,0,8,0" Click="OnShowAllPanes" Content="Show all panes" />
+                        <TextBlock VerticalAlignment="Center" Style="{StaticResource Tessel.Text.Secondary}" Text="Use the … menu of a tab to move, float or hide a pane; drag the splitters." />
+                    </WrapPanel>
+                    <tessel:DockingManager x:Name="Dock" Height="420">
+                        <tessel:DockingManager.Document>
+                            <Border Margin="6,0" Background="{DynamicResource Tessel.SurfaceAltBrush}" CornerRadius="6">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock HorizontalAlignment="Center" FontSize="16" FontWeight="SemiBold" Text="Document area" />
+                                    <TextBlock Margin="0,4,0,0" Style="{StaticResource Tessel.Text.Secondary}" Text="Your editor, canvas or tabs go here" />
+                                </StackPanel>
+                            </Border>
+                        </tessel:DockingManager.Document>
+                        <tessel:DockPane Title="Explorer" Glyph="&#xE8B7;" Side="Left">
+                            <ListBox BorderThickness="0" Background="Transparent">
+                                <ListBoxItem Content="Program.cs" />
+                                <ListBoxItem Content="MainWindow.xaml" />
+                                <ListBoxItem Content="Themes" />
+                                <ListBoxItem Content="Controls" />
+                                <ListBoxItem Content="README.md" />
+                            </ListBox>
+                        </tessel:DockPane>
+                        <tessel:DockPane Title="Outline" Glyph="&#xE8FD;" Side="Left">
+                            <TextBlock Style="{StaticResource Tessel.Text.Secondary}" Text="Classes, methods and properties of the open file." TextWrapping="Wrap" />
+                        </tessel:DockPane>
+                        <tessel:DockPane x:Name="InspectorPane" Title="Inspector" Glyph="&#xE713;" Side="Right" Padding="0">
+                            <tessel:PropertyGrid x:Name="DockInspector" BorderThickness="0" />
+                        </tessel:DockPane>
+                        <tessel:DockPane Title="Output" Glyph="&#xE756;" Side="Bottom">
+                            <TextBox x:Name="Log" AcceptsReturn="True" FontFamily="Consolas" IsReadOnly="True" Text="Build started...&#10;Build succeeded in 1.4 s." />
+                        </tessel:DockPane>
+                    </tessel:DockingManager>
+                </StackPanel>
+            </tessel:Card>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

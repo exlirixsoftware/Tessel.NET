@@ -352,10 +352,34 @@
                                    Foreground="{TemplateBinding Foreground}"
                                    Text="{TemplateBinding Initials}" />
                         <Ellipse x:Name="PART_Image" Visibility="Collapsed" />
+                        <Ellipse x:Name="PresenceDot"
+                                 Width="{TemplateBinding PresenceSize}"
+                                 Height="{TemplateBinding PresenceSize}"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Bottom"
+                                 Stroke="{DynamicResource Tessel.SurfaceBrush}"
+                                 StrokeThickness="2"
+                                 Visibility="Collapsed" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Fill" Value="{x:Null}">
                             <Setter TargetName="Circle" Property="Fill" Value="{DynamicResource Tessel.AccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="Presence" Value="Online">
+                            <Setter TargetName="PresenceDot" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PresenceDot" Property="Fill" Value="{DynamicResource Tessel.SuccessBrush}" />
+                        </Trigger>
+                        <Trigger Property="Presence" Value="Away">
+                            <Setter TargetName="PresenceDot" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PresenceDot" Property="Fill" Value="{DynamicResource Tessel.WarningBrush}" />
+                        </Trigger>
+                        <Trigger Property="Presence" Value="Busy">
+                            <Setter TargetName="PresenceDot" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PresenceDot" Property="Fill" Value="{DynamicResource Tessel.DangerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Presence" Value="Offline">
+                            <Setter TargetName="PresenceDot" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PresenceDot" Property="Fill" Value="{DynamicResource Tessel.TextTertiaryBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

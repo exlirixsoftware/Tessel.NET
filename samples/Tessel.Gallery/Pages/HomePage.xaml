@@ -78,11 +78,17 @@
             </UniformGrid>
 
             <!--  What's new  -->
-            <tessel:Card Margin="0,16,0,0" Header="What's new in 1.2">
+            <tessel:Card Margin="0,16,0,0" Header="What's new in 1.3">
                 <StackPanel>
-                    <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="The new Timeline control shows events in chronological order, and the new AnimationTimeline is an editing timeline for video and pixel editors: tracks, clips, keyframes, markers, scrubbing, snapping, zoom and playback." />
+                    <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="Dashboard and editor controls: Gauge, Sparkline, CalendarHeatmap, a property inspector, a Gantt chart, a docking shell, a command palette (Ctrl+K), tags and mentions, a carousel and avatar groups. Also a curve editor with undo and zoom, a range slider and stacked notifications." />
                     <WrapPanel>
-                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Animation timeline" Tag="Animation" tessel:ControlHelper.Icon="{tessel:Glyph Video}" Style="{StaticResource Tessel.Button.Accent}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Dashboards &amp; tools" Tag="Tools" tessel:ControlHelper.Icon="{tessel:Glyph Library}" Style="{StaticResource Tessel.Button.Accent}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Curve editor" Tag="Animation" tessel:ControlHelper.Icon="{tessel:Glyph Video}" />
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Notifications" Tag="Feedback" tessel:ControlHelper.Icon="{tessel:Glyph Message}" />
+                    </WrapPanel>
+                    <TextBlock Margin="0,8,0,8" Style="{StaticResource Tessel.Text.Caption}" Text="Introduced in 1.2: the Timeline control for events in chronological order and the AnimationTimeline, an editing timeline for video and pixel editors with tracks, clips, keyframes, markers, waveforms, undo and playback." />
+                    <WrapPanel>
+                        <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Animation timeline" Tag="Animation" tessel:ControlHelper.Icon="{tessel:Glyph Video}" />
                         <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Timeline" Tag="Navigation" tessel:ControlHelper.Icon="{tessel:Glyph Clock}" />
                     </WrapPanel>
                     <TextBlock Margin="0,8,0,8" Style="{StaticResource Tessel.Text.Caption}" Text="Introduced in 1.1: 15 new controls, file dialogs with search and thumbnails, and styles for the remaining everyday WPF controls." />
@@ -94,7 +100,21 @@
                         <Button Margin="0,0,8,8" Click="OnOpenPage" Content="Feedback" Tag="Feedback" tessel:ControlHelper.Icon="{tessel:Glyph Message}" />
                     </WrapPanel>
                     <WrapPanel>
-                        <tessel:Badge Margin="0,0,6,6" Content="AnimationTimeline" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="PropertyGrid" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="GanttChart" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="DockingManager" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="CommandPalette" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="CurveEditor" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="Gauge" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="Sparkline" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="CalendarHeatmap" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="Carousel" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="TagInput" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="MentionBox" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="AvatarGroup" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="RangeSlider" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="NotificationHost" IsSolid="True" Kind="Accent" />
+                        <tessel:Badge Margin="0,0,6,6" Content="AnimationTimeline" Kind="Accent" />
                         <tessel:Badge Margin="0,0,6,6" Content="Timeline" IsSolid="True" Kind="Accent" />
                         <tessel:Badge Margin="0,0,6,6" Content="TabView" Kind="Accent" />
                         <tessel:Badge Margin="0,0,6,6" Content="AutoSuggestBox" Kind="Accent" />

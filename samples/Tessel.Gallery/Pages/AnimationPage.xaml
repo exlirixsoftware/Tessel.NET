@@ -128,6 +128,60 @@
                     </tessel:AnimationTimeline>
                 </StackPanel>
             </tessel:Card>
+
+            <tessel:Card Header="Curve editor" Style="{StaticResource Section}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <tessel:CurveEditor x:Name="Curve" Height="400" CurveChanged="OnCurveEdited" />
+                        <Border x:Name="BallTrack" Height="34" Margin="0,12,0,0" Padding="4" Background="{DynamicResource Tessel.SurfaceAltBrush}" CornerRadius="6">
+                            <Ellipse Width="26" Height="26" HorizontalAlignment="Left" Fill="{DynamicResource Tessel.AccentBrush}">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform x:Name="BallShift" />
+                                </Ellipse.RenderTransform>
+                            </Ellipse>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Width="250" Margin="20,0,0,0">
+                        <TextBlock Margin="0,0,0,8" Style="{StaticResource Tessel.Text.BodyStrong}" Text="Shape the motion" />
+                        <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• Drag a key; select one key to show its two handles." TextWrapping="Wrap" />
+                        <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• Drag a box or Ctrl-click to select several keys and move them together." TextWrapping="Wrap" />
+                        <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• Double-click the graph to add a key, Delete removes the selected ones, Ctrl+Z / Ctrl+Y undo and redo." TextWrapping="Wrap" />
+                        <TextBlock Margin="0,0,0,4" Style="{StaticResource Tessel.Text.Secondary}" Text="• Ctrl + mouse wheel zooms (add Shift for time only, Alt for value only); drag with the middle button or Space to pan." TextWrapping="Wrap" />
+                        <TextBlock Margin="0,0,0,12" Style="{StaticResource Tessel.Text.Secondary}" Text="• Drag the strip above the graph to scrub; the ball follows the curve." TextWrapping="Wrap" />
+                        <ComboBox x:Name="EasingBox" Margin="0,0,0,8" tessel:ControlHelper.Header="Easing of the selected segment" SelectionChanged="OnEasingChosen">
+                            <ComboBoxItem Content="Linear" Tag="Linear" />
+                            <ComboBoxItem Content="Ease" Tag="Ease" />
+                            <ComboBoxItem Content="Ease in" Tag="EaseIn" />
+                            <ComboBoxItem Content="Ease out" Tag="EaseOut" />
+                            <ComboBoxItem Content="Ease in-out" Tag="EaseInOut" />
+                            <ComboBoxItem Content="Ease in back" Tag="EaseInBack" />
+                            <ComboBoxItem Content="Ease out back" Tag="EaseOutBack" />
+                            <ComboBoxItem Content="Ease in-out back" Tag="EaseInOutBack" />
+                        </ComboBox>
+                        <ComboBox x:Name="InterpolationBox" Margin="0,0,0,8" tessel:ControlHelper.Header="Interpolation" SelectedIndex="2" SelectionChanged="OnInterpolationChosen">
+                            <ComboBoxItem Content="Linear" Tag="Linear" />
+                            <ComboBoxItem Content="Step" Tag="Step" />
+                            <ComboBoxItem Content="Bezier" Tag="Bezier" />
+                        </ComboBox>
+                        <tessel:ToggleSwitch Margin="0,0,0,12" Content="Snap to the grid" IsChecked="{Binding IsSnappingEnabled, ElementName=Curve, Mode=TwoWay}" />
+                        <WrapPanel>
+                            <Button Margin="0,0,8,8" Click="OnCurvePlay" Content="Play" Style="{StaticResource Tessel.Button.Accent}" />
+                            <Button Margin="0,0,8,8" Click="OnCurveUndo" Content="Undo" IsEnabled="{Binding CanUndo, ElementName=Curve}" />
+                            <Button Margin="0,0,8,8" Click="OnCurveRedo" Content="Redo" IsEnabled="{Binding CanRedo, ElementName=Curve}" />
+                            <Button Margin="0,0,8,8" Click="OnCurveZoomIn" Content="Zoom in" />
+                            <Button Margin="0,0,8,8" Click="OnCurveZoomOut" Content="Zoom out" />
+                            <Button Margin="0,0,8,8" Click="OnCurveFit" Content="Fit" />
+                            <Button Margin="0,0,8,8" Click="OnCurveResetView" Content="Reset view" />
+                            <Button Margin="0,0,0,8" Click="OnCurveReset" Content="New curve" />
+                        </WrapPanel>
+                        <TextBlock x:Name="CurveInfo" Style="{StaticResource Tessel.Text.Caption}" Text="t = 0   value = 0" />
+                    </StackPanel>
+                </Grid>
+            </tessel:Card>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
